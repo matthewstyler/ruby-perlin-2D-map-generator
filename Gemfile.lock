@@ -1,0 +1,39 @@
+PATH
+  remote: .
+  specs:
+    ruby-perlin-2D-map-generator (0.0.1)
+      perlin
+      tty-option
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ast (1.1.0)
+    minitest (5.18.1)
+    mocha (2.0.4)
+      ruby2_keywords (>= 0.0.5)
+    parser (2.0.0.pre1)
+      ast (~> 1.1)
+      slop (~> 3.4, >= 3.4.5)
+    perlin (0.2.2)
+    rainbow (3.1.1)
+    rake (13.0.6)
+    rubocop (0.9.1)
+      parser (= 2.0.0.pre1)
+      rainbow (>= 1.1.4)
+    ruby2_keywords (0.0.5)
+    slop (3.6.0)
+    tty-option (0.3.0)
+
+PLATFORMS
+  x86_64-darwin-21
+
+DEPENDENCIES
+  minitest
+  mocha
+  rake
+  rubocop
+  ruby-perlin-2D-map-generator!
+
+BUNDLED WITH
+   2.2.3
