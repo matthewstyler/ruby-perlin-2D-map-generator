@@ -1,17 +1,53 @@
 # Ruby Perlin 2D Map Generator
-A gem that procedurally generates seeded and customizable 2D map using perlin noise. Map can be rendered in console using ansi colors or returned as 2D array of hashes describing each tile and binome. Completely customizable, use the --help option for full usage details.
+A gem that procedurally generates seeded and customizable 2D map using perlin noise.
+
+Include the gem in your project, or use the executable from the command line.
+
+Map can be rendered in console using ansi colors or returned as 2D array of hashes describing each tile and binome. Completely customizable, use the --help option for full usage details.
 
 
-# Command line Usage
+![2D-maps](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/assets/4560901/89b4f623-53e3-445e-8e5b-96f4fcf67af5)
+
+# Customization examples
+
+See Command line Usage for full customization, below are some examples. Alter the temperature, moisture or elevation seeds to alter these maps:
+
+- Plains with random terrain evens: `ruby-perlin-2D-map-generator render`
+- Desert (increase temperature, decrease moisture): `ruby-perlin-2D-map-generator render --temp=100 --moisture=-100`
+- Mountainous with lakes (increase elevation, increase moisture) `ruby-perlin-2D-map-generator render --elevation=25 --moisture=25`
+- Islands (decreaes elevation, increase moisture): `ruby-perlin-2D-map-generator render --elevation=-40 --moisture=25`
+- Taiga map (decrease temperature, increase moisture): `ruby-perlin-2D-map-generator render --temp=-60 --moisture=30 `
+
+## Common customization
 ```bash
-$ ./bin/ruby-perlin-2D-map-generator --help
+--width=int        The width of the generated map (default 128)
+--height=int       The height of the generated map (default 128)
+
+--hs=int           The seed for a terrains height perlin generation
+                         (default 10)
+--ms=int           The seed for a terrains moist perlin generation
+                         (default 300)
+--ts=int           The seed for a terrains temperature perlin generation
+                         (default 3000)
+
+--elevation=float  Adjust each generated elevation by this percent (0 -
+                         100) (default 0.0)
+--moisture=float   Adjust each generated moisture by this percent (0 -
+                         100) (default 0.0)
+--temp=float       Adjust each generated temperature by this percent (0
+                         - 100) (default 0.0)
+```
+
+# Full Command line Usage
+```bash
+$ ruby-perlin-2D-map-generator --help
 ```
 ```bash
 Usage: ruby-perlin-2D-map-generator [OPTIONS] (DESCRIBE | RENDER)
 
-Generate a replayable seeded procedurally generated 2 dimensional map. Rendered
-in the console  using ASCII colours, or described as a hash containting each
-tiles information.
+Generate a seeded customizable procedurally generated 2D map.
+Rendered in the console  using ansi colours, or described as a 2D array of
+hashes with each tiles information.
 
 Arguments:
   (DESCRIBE | RENDER)  command to run: render prints the map to standard
@@ -59,5 +95,5 @@ Examples:
     $ ruby-perlin-2D-map-generator render
 
   Render with options
-    $ ruby-perlin-2D-map-generator render --i=false --t=10 --ms=10
+    $ ruby-perlin-2D-map-generator render --elevation=-40 --moisture=25 --hs=1
 ```

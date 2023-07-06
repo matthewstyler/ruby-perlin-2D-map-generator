@@ -74,7 +74,7 @@ class Biome
   DEEP_DESERT                 = Biome.new(name: 'deep_desert', flora_range: 1, colour: AnsiColours::Background::DESERT_LIGHT_YELLOW)
   STEPPE_DESERT               = Biome.new(name: 'steppe_desert', flora_range: 1, colour: AnsiColours::Background::DESERT_DARK_YELLOW)
   SWAMP                       = Biome.new(name: 'swamp', flora_range: nil, colour: AnsiColours::Background::GREEN_SWAMP)
-  COASTLINE                   = Biome.new(name: 'coastline', flora_range: 5, colour: AnsiColours::Background::SANDY)
+  COASTLINE                   = Biome.new(name: 'coastline', flora_range: nil, colour: AnsiColours::Background::SANDY)
   SHOAL                       = Biome.new(name: 'shoal', flora_range: nil, colour: AnsiColours::Background::SHOAL_BLUE)
   OCEAN                       = Biome.new(name: 'ocean', flora_range: nil, colour: AnsiColours::Background::LIGHT_BLUE)
   DEEP_OCEAN                  = Biome.new(name: 'deep_ocean', flora_range: nil, colour: AnsiColours::Background::BLUE)

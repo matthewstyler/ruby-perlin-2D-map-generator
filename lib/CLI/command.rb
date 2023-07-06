@@ -12,14 +12,14 @@ module CLI
 
       no_command
 
-      desc 'Generate a replayable seeded procedurally generated 2 dimensional map. Rendered in the console ' \
-           ' using ASCII colours, or described as a hash containting each tiles information.'
+      desc 'Generate a seeded customizable procedurally generated 2D map. Rendered in the console ' \
+           ' using ansi colours, or described as a 2D array of hashes with each tiles information.'
 
       example 'Render with defaults',
               '  $ ruby-perlin-2D-map-generator render'
 
       example 'Render with options',
-              '  $ ruby-perlin-2D-map-generator render --i=false --t=10 --ms=10'
+              '  $ ruby-perlin-2D-map-generator render --elevation=-40 --moisture=25 --hs=1'
     end
 
     argument :command do
