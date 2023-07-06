@@ -1,5 +1,5 @@
 # Ruby Perlin 2D Map Generator
-A gem that procedurally generates a seeded replayable customizable 2D map using perlin noise. Map can be rendered in console using ansi colors or returned as 2D array of hashes describing each tile and binome. Completely customizable, use the --help option for full usage details.
+A gem that procedurally generates seeded and customizable 2D map using perlin noise. Map can be rendered in console using ansi colors or returned as 2D array of hashes describing each tile and binome. Completely customizable, use the --help option for full usage details.
 
 
 # Command line Usage
