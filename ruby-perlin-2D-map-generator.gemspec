@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name          = 'ruby-perlin-2D-map-generator'
-  s.version       = '0.0.1'
+  s.version       = '0.0.2'
   s.summary       = 'Procedurally generate seeded and customizable 2D maps, rendered with ansi colours or described in a 2D array of hashes'
   s.description   = 'A gem that procedurally generates a seeded and customizable 2D map using perlin noise. Map can be rendered in console ' \
                     'using ansi colors or returned as 2D array of hashes describing each tile and binome. Completely' \
@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
   s.executables   = ['ruby-perlin-2D-map-generator']
   s.require_paths = ['lib']
-  
+
   s.required_ruby_version       = '>= 3.0'
 
   s.homepage                    = 'https://github.com/matthewstyler/ruby-perlin-2D-map-generator'
