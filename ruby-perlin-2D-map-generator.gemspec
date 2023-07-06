@@ -13,6 +13,8 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
   s.executables   = ['ruby-perlin-2D-map-generator']
   s.require_paths = ['lib']
+  
+  s.required_ruby_version       = '>= 3.0'
 
   s.homepage                    = 'https://github.com/matthewstyler/ruby-perlin-2D-map-generator'
   s.metadata['source_code_uri'] = 'https://github.com/matthewstyler/ruby-perlin-2D-map-generator'
