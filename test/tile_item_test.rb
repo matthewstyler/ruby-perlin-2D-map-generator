@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'minitest/autorun'
+require 'test_helper'
 require 'tile_item'
 
 class TileItemTest < Minitest::Test

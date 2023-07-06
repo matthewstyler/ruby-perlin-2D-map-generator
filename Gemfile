@@ -7,3 +7,7 @@ gemspec
 group :development do
   gem 'rubocop', '= 1.54.1', require: false
 end
+
+group :test do
+  gem 'simplecov', require: false
+end

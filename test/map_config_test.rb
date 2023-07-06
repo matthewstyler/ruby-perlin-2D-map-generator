@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'minitest/autorun'
+require 'test_helper'
 require 'map_config'
 
 class MapConfigTest < Minitest::Test

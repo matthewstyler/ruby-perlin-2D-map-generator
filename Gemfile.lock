@@ -9,6 +9,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    docile (1.4.0)
     json (2.6.3)
     language_server-protocol (3.17.0.3)
     minitest (5.18.1)
@@ -39,6 +40,12 @@ GEM
       parser (>= 3.2.1.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     tty-option (0.3.0)
     unicode-display_width (2.4.2)
 
@@ -51,6 +58,7 @@ DEPENDENCIES
   rake
   rubocop (= 1.54.1)
   ruby-perlin-2D-map-generator!
+  simplecov
 
 BUNDLED WITH
    2.2.3
