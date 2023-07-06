@@ -8,6 +8,20 @@ Map can be rendered in console using ansi colors or returned as 2D array of hash
 
 ![2D-maps](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/assets/4560901/89b4f623-53e3-445e-8e5b-96f4fcf67af5)
 
+# Installation
+
+### Bundler
+
+```ruby
+gem 'ruby-perlin-2D-map-generator'
+```
+
+### Manual
+
+```sh
+gem install ruby-perlin-2D-map-generator
+```
+
 # Customization examples
 
 See Command line Usage for full customization, below are some examples. Alter the temperature, moisture or elevation seeds to alter these maps:
