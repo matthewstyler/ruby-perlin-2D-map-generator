@@ -20,10 +20,12 @@ Gem::Specification.new do |s|
   s.metadata['source_code_uri'] = 'https://github.com/matthewstyler/ruby-perlin-2D-map-generator'
   s.metadata['bug_tracker_uri'] = 'https://github.com/matthewstyler/ruby-perlin-2D-map-generator/issues'
 
-  s.add_dependency 'perlin'
-  s.add_dependency 'tty-option'
+  s.add_dependency 'perlin', '~> 0.2.2'
+  s.add_dependency 'tty-option', '~> 0.3.0'
 
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'mocha'
-  s.add_development_dependency 'rake'
+  s.add_development_dependency 'minitest', '~> 5.18'
+  s.add_development_dependency 'mocha', '~> 2.0.4'
+  s.add_development_dependency 'rake', '~> 13.0.6'
+  s.add_development_dependency 'rubocop', '~> 1.54.1'
+  s.add_development_dependency 'simplecov', '~> 0.22.0'
 end
