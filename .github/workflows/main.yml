@@ -1,4 +1,4 @@
-name: ruby-perlin-2D-map-generator
+name: CI
 
 on:
   push:
