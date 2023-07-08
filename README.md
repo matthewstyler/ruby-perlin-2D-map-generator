@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/ruby-perlin-2D-map-generator.svg)](https://badge.fury.io/rb/ruby-perlin-2D-map-generator)
 ![CI Status](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/actions/workflows/main.yml/badge.svg)
+![CodeQL](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/workflows/CodeQL/badge.svg)
 [![Downloads](https://img.shields.io/gem/dt/ruby-perlin-2D-map-generator.svg?style=flat)](https://rubygems.org/gems/ruby-perlin-2D-map-generator)
 
 A gem that procedurally generates seeded and customizable 2D map using perlin noise.
