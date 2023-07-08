@@ -1,4 +1,4 @@
-name: Ruby
+name: ruby-perlin-2D-map-generator
 
 on:
   push:
