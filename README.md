@@ -61,10 +61,26 @@ See Command line Usage for full customization, below are some examples. Alter th
 
 # Generate without rendering
 
-```bash
+```irb
 irb(main):001:0> map = Map.new
-...
-irb(main):002:0> map.describe[1][0]
+```
+
+Map can then be manipulated via traditional x,y lookup
+```irb
+map[x, y].to_h
+=>
+{:x=>0,                                                        
+ :y=>1,                                                        
+ :height=>0.29251394359649563,                                 
+ :moist=>0.29100678755603004,                                  
+ :temp=>0.6034041566100443,                                    
+ :biome=>{:name=>"deep_valley", :flora_range=>1, :colour=>"\e[48;5;47m"},
+ :items=>[]}
+```
+or the less intuitative multidimensional lookup (reversed axis):
+
+```irb
+map.tiles[y][x].to_h
 => 
 {:x=>0,                                                        
  :y=>1,                                                        
