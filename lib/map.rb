@@ -21,6 +21,14 @@ class Map
     end
   end
 
+  # rubocop:disable Naming/MethodParameterName:
+  def [](x, y)
+    raise ArgumentError, 'coordinates out of bounds' if y >= tiles.size || x >= tiles[y].size
+
+    tiles[y][x]
+  end
+  # rubocop:enable Naming/MethodParameterName:
+
   def tiles
     @tiles ||= MapTileGenerator.new(map: self).generate
   end

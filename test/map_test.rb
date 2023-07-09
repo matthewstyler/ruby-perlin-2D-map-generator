@@ -57,6 +57,33 @@ class MapTest < Minitest::Test
     assert_equal "00011011\n\n", output
   end
 
+  def test_index_lookup
+    mock_one = mock('Tile1')
+    mock_two = mock('Tile2')
+    mock_three = mock('Tile3')
+    mock_four = mock('Tile4')
+
+    tiles = [[mock_one, mock_two], [mock_three, mock_four]]
+
+    map = Map.new
+    map.expects(:tiles).at_least_once.returns(tiles)
+
+    assert_equal mock_one, map[0, 0]
+    assert_equal mock_three, map[0, 1]
+    assert_equal mock_two, map[1, 0]
+    assert_equal mock_four, map[1, 1]
+  end
+
+  def test_index_out_of_bound_raises_error
+    tiles = [[mock('Tile1'), mock('Tile2')], [mock('Tile3'), mock('Tile4')]]
+    map = Map.new
+    map.expects(:tiles).returns(tiles)
+
+    assert_raises ArgumentError, 'coordinates out of bounds' do
+      map[1, 2]
+    end
+  end
+
   private
 
   def capture_output
