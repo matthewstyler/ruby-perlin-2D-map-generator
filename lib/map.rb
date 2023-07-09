@@ -23,7 +23,7 @@ class Map
 
   # rubocop:disable Naming/MethodParameterName:
   def [](x, y)
-    raise ArgumentError, 'coordinates out of bounds' if y >= tiles.size || x >= tiles[y].size
+    raise ArgumentError, 'coordinates out of bounds' if y.nil? || y >= tiles.size || x.nil? || x >= tiles[y].size
 
     tiles[y][x]
   end

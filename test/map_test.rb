@@ -77,10 +77,18 @@ class MapTest < Minitest::Test
   def test_index_out_of_bound_raises_error
     tiles = [[mock('Tile1'), mock('Tile2')], [mock('Tile3'), mock('Tile4')]]
     map = Map.new
-    map.expects(:tiles).returns(tiles)
+    map.expects(:tiles).at_least_once.returns(tiles)
 
     assert_raises ArgumentError, 'coordinates out of bounds' do
       map[1, 2]
+    end
+
+    assert_raises ArgumentError, 'coordinates out of bounds' do
+      map[nil, 2]
+    end
+
+    assert_raises ArgumentError, 'coordinates out of bounds' do
+      map[1, nil]
     end
   end
 

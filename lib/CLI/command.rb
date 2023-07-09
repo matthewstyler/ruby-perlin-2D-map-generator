@@ -20,14 +20,25 @@ module CLI
 
       example 'Render with options',
               '  $ ruby-perlin-2D-map-generator render --elevation=-40 --moisture=25 --hs=1'
+
+      example 'Describe tile [1, 1]',
+              '  $ ruby-perlin-2D-map-generator describe coordinates=1,1'
     end
 
     argument :command do
       name '(describe | render)'
       arity one
-      validate ->(v) { v.downcase == 'describe' || v.downcase == 'render' }
-      desc 'command to run: render prints the map to standard output using ansi colors, ' \
-           'while describe prints each tiles bionome information in the map.'
+      permit %w[describe render]
+      desc 'command to run: render prints the map to standard output using ansi colors. ' \
+           'describe prints each tiles bionome information in the map, can be combined with ' \
+           'the coordinates keyword to print a specific tile.'
+    end
+
+    keyword :coordinates do
+      arity one
+      convert :int_list
+      validate ->(v) { v >= 0 }
+      desc 'Used with the describe command, only returns the given coordinate tile details'
     end
 
     option :height_seed do
@@ -255,7 +266,7 @@ module CLI
       ))
       case params[:command]
       when 'render' then map.render
-      when 'describe' then puts map.describe
+      when 'describe' then puts(!params[:coordinates].nil? ? map[params[:coordinates][0], params[:coordinates][1]].to_h : map.describe)
       end
     end
 

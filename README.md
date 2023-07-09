@@ -91,6 +91,20 @@ map.tiles[y][x].to_h
  :items=>[]}
 ```
 
+or from the command line:
+
+```bash
+$ ruby-perlin-2D-map-generator describe coordinates=0,1
+
+{:x=>0,                                                        
+ :y=>1,                                                        
+ :height=>0.29251394359649563,                                 
+ :moist=>0.29100678755603004,                                  
+ :temp=>0.6034041566100443,                                    
+ :biome=>{:name=>"deep_valley", :flora_range=>1, :colour=>"\e[48;5;47m"},
+ :items=>[]}
+```
+
 # Full Command line Usage
 ```bash
 $ ruby-perlin-2D-map-generator --help
@@ -104,8 +118,14 @@ hashes with each tiles information.
 
 Arguments:
   (DESCRIBE | RENDER)  command to run: render prints the map to standard
-                       output using ansi colors, while describe prints each
-                       tiles bionome information in the map.
+                       output using ansi colors. describe prints each tiles
+                       bionome information in the map, can be combined with the
+                       coordinates keyword to print a specific tile.
+                       (permitted: describe, render)
+
+Keywords:
+  COORDINATES=INT_LIST  Used with the describe command, only returns the given
+                        coordinate tile details
 
 Options:
       --elevation=float  Adjust each generated elevation by this percent (0 -
@@ -149,4 +169,7 @@ Examples:
 
   Render with options
     $ ruby-perlin-2D-map-generator render --elevation=-40 --moisture=25 --hs=1
+
+  Describe tile [1, 1]
+    $ ruby-perlin-2D-map-generator describe coordinates=1,1
 ```
