@@ -16,3 +16,8 @@ end
 task :lint do
   exec 'rubocop -A'
 end
+
+task :test_and_lint do
+  Rake::Task['test'].invoke
+  Rake::Task['lint'].invoke
+end
