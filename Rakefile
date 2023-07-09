@@ -8,3 +8,7 @@ Minitest::TestTask.create(:test) do |t|
   t.warning = false
   t.test_globs = ['test/**/*_test.rb']
 end
+
+task :irb do
+  exec 'irb -I lib -r ./lib/**/*'
+end
