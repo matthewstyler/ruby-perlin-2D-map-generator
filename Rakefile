@@ -12,3 +12,7 @@ end
 task :irb do
   exec 'irb -I lib -r ./lib/**/*'
 end
+
+task :lint do
+  exec 'rubocop -A'
+end
