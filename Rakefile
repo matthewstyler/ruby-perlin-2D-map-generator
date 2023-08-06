@@ -10,7 +10,7 @@ Minitest::TestTask.create(:test) do |t|
 end
 
 task :irb do
-  exec 'irb -I lib -r ./lib/**/*'
+  exec 'irb -I lib'
 end
 
 task :lint do

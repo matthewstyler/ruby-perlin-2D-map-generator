@@ -12,3 +12,4 @@
 *.a
 mkmf.log
 Gemfile.lock
+.irb_history
