@@ -3,7 +3,6 @@
 require 'map_tile_generator'
 require 'map_config'
 require 'road_generator'
-require 'pry-byebug'
 
 class Map
   attr_reader :config
@@ -35,8 +34,7 @@ class Map
     @tiles ||=
       begin
         map_tiles = generate_tiles
-        # binding.pry
-        RoadGenerator.new(map_tiles).generate(0, 0, 50, 50).each(&:make_road)
+        RoadGenerator.new(map_tiles).generate_num_of_roads(config.roads)
         map_tiles
       end
   end

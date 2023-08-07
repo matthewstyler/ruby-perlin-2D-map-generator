@@ -12,6 +12,10 @@ class TestAStarFinder < Minitest::Test
       @x = x
       @y = y
     end
+
+    def path_heuristic
+      0
+    end
   end
 
   def setup

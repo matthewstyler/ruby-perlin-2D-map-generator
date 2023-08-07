@@ -2,13 +2,14 @@
 
 require 'biome'
 require 'flora'
+require 'ansi_colours'
 
 class Tile
   attr_reader :x, :y, :height, :moist, :temp, :map, :type
 
-  TYPES = [
-    :biome,
-    :road
+  TYPES = %i[
+    biome
+    road
   ].freeze
 
   def initialize(map:, x:, y:, height: 0, moist: 0, temp: 0, type: :biome)
@@ -75,12 +76,16 @@ class Tile
     @type = :road
   end
 
+  def path_heuristic
+    height
+  end
+
   private
 
   def render_color_by_type
     case type
     when :biome then biome.colour
-    when :road then "\e[48;5;239m"
+    when :road then AnsiColours::Background::ROAD_BLACK
     end
   end
 

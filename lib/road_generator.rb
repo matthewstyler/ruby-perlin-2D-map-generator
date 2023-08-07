@@ -11,7 +11,21 @@ class RoadGenerator
     @finder = Pathfinding::AStarFinder.new
   end
 
-  def generate(start_x, start_y, end_x, end_y)
+  def generate_num_of_roads(x)
+    return if x <= 0
+
+    (1..x).each do |_n|
+      random_objects_at_edges = @grid.edge_nodes.sample(2)
+      generate_path(
+        random_objects_at_edges[0].x,
+        random_objects_at_edges[0].y,
+        random_objects_at_edges[1].x,
+        random_objects_at_edges[1].y
+      ).each(&:make_road)
+    end
+  end
+
+  def generate_path(start_x, start_y, end_x, end_y)
     start_node = grid.node(start_x, start_y)
     end_node = grid.node(end_x, end_y)
     finder.find_path(start_node, end_node, grid)

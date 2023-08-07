@@ -236,6 +236,16 @@ module CLI
       default MapConfig::DEFAULT_MOIST_ADJUSTMENT
     end
 
+    option :roads do
+      long '--roads int'
+      long '--roads=int'
+
+      desc 'Add this many roads through the map, starting and ending at edges'
+      convert Integer
+      validate ->(val) { val >= 0 }
+      default MapConfig::DEFAULT_NUM_OF_ROADS
+    end
+
     flag :help do
       short '-h'
       long '--help'
@@ -262,7 +272,8 @@ module CLI
         perlin_height_config: perlin_height_config,
         perlin_moist_config: perlin_moist_config,
         perlin_temp_config: perlin_temp_config,
-        generate_flora: params[:generate_flora]
+        generate_flora: params[:generate_flora],
+        roads: params[:roads]
       ))
       case params[:command]
       when 'render' then map.render

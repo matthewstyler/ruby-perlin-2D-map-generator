@@ -154,7 +154,7 @@ class TileTest < Minitest::Test
         type: :not_real
       )
     end
-    
+
     assert_equal 'invalid tile type', result.to_s
   end
 
@@ -167,5 +167,9 @@ class TileTest < Minitest::Test
     assert_equal :biome, tile.type
     tile.make_road
     assert_equal :road, tile.type
+  end
+
+  def test_tile_path_heuristic_is_elevatione
+    assert_equal @tile.height, @tile.path_heuristic
   end
 end
