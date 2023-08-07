@@ -2,6 +2,7 @@
 
 require 'pathfinding/grid'
 require 'pathfinding/a_star_finder'
+require 'pry-byebug'
 
 class RoadGenerator
   attr_reader :grid, :finder
@@ -14,8 +15,9 @@ class RoadGenerator
   def generate_num_of_roads(config)
     return if config.roads <= 0
 
-    (1..config.roads).each do |_n|
-      random_objects_at_edges = random_nodes_not_on_same_edge(config.road_seed)
+    seed = config.road_seed
+    (1..config.roads).each do |n|
+      random_objects_at_edges = random_nodes_not_on_same_edge(seed + n) # add n otherwise each road is the same
       generate_path(
         random_objects_at_edges[0].x,
         random_objects_at_edges[0].y,
