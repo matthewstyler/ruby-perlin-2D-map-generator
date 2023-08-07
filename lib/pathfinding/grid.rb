@@ -56,9 +56,9 @@ module Pathfinding
         @nodes.map do |row|
           row.select do |obj|
             obj.x == min_max_coordinates[:min_x] ||
-            obj.x == min_max_coordinates[:max_x] ||
-            obj.y == min_max_coordinates[:min_y] ||
-            obj.y == min_max_coordinates[:max_y]
+              obj.x == min_max_coordinates[:max_x] ||
+              obj.y == min_max_coordinates[:min_y] ||
+              obj.y == min_max_coordinates[:max_y]
           end
         end.flatten
     end

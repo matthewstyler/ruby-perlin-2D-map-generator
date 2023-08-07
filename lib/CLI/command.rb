@@ -246,6 +246,15 @@ module CLI
       default MapConfig::DEFAULT_NUM_OF_ROADS
     end
 
+    option :road_seed do
+      long '--rs int'
+      long '--rs=int'
+
+      desc 'The seed for generating roads'
+      convert Integer
+      default MapConfig::DEFAULT_ROAD_SEED
+    end
+
     flag :help do
       short '-h'
       long '--help'
@@ -273,7 +282,7 @@ module CLI
         perlin_moist_config: perlin_moist_config,
         perlin_temp_config: perlin_temp_config,
         generate_flora: params[:generate_flora],
-        roads: params[:roads]
+        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads).values)
       ))
       case params[:command]
       when 'render' then map.render

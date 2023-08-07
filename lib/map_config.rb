@@ -25,15 +25,19 @@ class MapConfig
   DEFAULT_TEMP_X_FREQUENCY = 2.5
   DEFAULT_TEMP_ADJUSTMENT  = 0.0
 
+  DEFAULT_ROAD_SEED        = 100
   DEFAULT_NUM_OF_ROADS     = 0
 
   PERLIN_CONFIG_OPTIONS = %i[width height noise_seed octaves x_frequency y_frequency persistance adjustment].freeze
-  PerlinConfig = Struct.new(*PERLIN_CONFIG_OPTIONS)
+  ROAD_CONFIG_OPTIONS = %i[road_seed roads].freeze
 
-  attr_reader :generate_flora, :perlin_height_config, :perlin_moist_config, :perlin_temp_config, :width, :height, :roads
+  PerlinConfig = Struct.new(*PERLIN_CONFIG_OPTIONS)
+  RoadConfig = Struct.new(*ROAD_CONFIG_OPTIONS)
+
+  attr_reader :generate_flora, :perlin_height_config, :perlin_moist_config, :perlin_temp_config, :width, :height, :road_config
 
   def initialize(perlin_height_config: default_perlin_height_config, perlin_moist_config: default_perlin_moist_config, perlin_temp_config: default_perlin_temp_config, width: DEFAULT_TILE_COUNT,
-                 height: DEFAULT_TILE_COUNT, generate_flora: DEFAULT_GENERATE_FLORA, roads: DEFAULT_NUM_OF_ROADS)
+                 height: DEFAULT_TILE_COUNT, generate_flora: DEFAULT_GENERATE_FLORA, road_config: default_road_config)
     raise ArgumentError unless perlin_height_config.is_a?(PerlinConfig) && perlin_moist_config.is_a?(PerlinConfig)
 
     @generate_flora = generate_flora
@@ -42,7 +46,7 @@ class MapConfig
     @perlin_temp_config = perlin_temp_config
     @width = width
     @height = height
-    @roads = roads
+    @road_config = road_config
   end
 
   private
@@ -60,5 +64,9 @@ class MapConfig
   def default_perlin_temp_config
     PerlinConfig.new(DEFAULT_TILE_COUNT, DEFAULT_TILE_COUNT, DEFAULT_TEMP_SEED, DEFAULT_TEMP_OCTAVES,
                      DEFAULT_TEMP_X_FREQUENCY, DEFAULT_TEMP_Y_FREQUENCY, DEFAULT_TEMP_PERSISTANCE, DEFAULT_TEMP_ADJUSTMENT)
+  end
+
+  def default_road_config
+    RoadConfig.new(DEFAULT_ROAD_SEED, DEFAULT_NUM_OF_ROADS)
   end
 end

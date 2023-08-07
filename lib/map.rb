@@ -34,7 +34,7 @@ class Map
     @tiles ||=
       begin
         map_tiles = generate_tiles
-        RoadGenerator.new(map_tiles).generate_num_of_roads(config.roads)
+        RoadGenerator.new(map_tiles).generate_num_of_roads(config.road_config)
         map_tiles
       end
   end

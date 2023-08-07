@@ -19,7 +19,8 @@ class MapTest < Minitest::Test
 
   def test_initialize_with_custom_config
     map_config = mock('MapConfig')
-    map_config.expects(:roads).returns(1)
+    road_config = MapConfig::RoadConfig.new(1, 2)
+    map_config.expects(:road_config).returns(road_config)
     generator_mock = mock('MapTileGenerator')
     road_generator_mock = mock('RoadGenerator')
 
@@ -27,7 +28,7 @@ class MapTest < Minitest::Test
     generator_mock.expects(:generate).returns([['Test2']])
 
     RoadGenerator.expects(:new).with([['Test2']]).returns(road_generator_mock)
-    road_generator_mock.expects(:generate_num_of_roads).with(1)
+    road_generator_mock.expects(:generate_num_of_roads).with(road_config)
 
     map = Map.new(map_config: map_config)
 
