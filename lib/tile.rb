@@ -85,7 +85,15 @@ class Tile
   def render_color_by_type
     case type
     when :biome then biome.colour
-    when :road then AnsiColours::Background::ROAD_BLACK
+    when :road
+      case height
+      when 0.66..1
+        AnsiColours::Background::HIGH_ROAD_BLACK
+      when 0.33..0.66
+        AnsiColours::Background::ROAD_BLACK
+      when 0..0.33
+        AnsiColours::Background::LOW_ROAD_BLACK
+      end
     end
   end
 

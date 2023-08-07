@@ -26,7 +26,9 @@ module AnsiColours
     TAIGA_HIGHLAND = "\e[48;5;65m"
     TAIGA_COAST = "\e[48;5;17m"
     ICE = "\e[48;5;159m"
+    LOW_ROAD_BLACK = "\e[48;5;241m"
     ROAD_BLACK = "\e[48;5;239m"
+    HIGH_ROAD_BLACK = "\e[48;5;236m"
     ANSI_RESET = "\033[0m"
   end
 end
