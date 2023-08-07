@@ -2,6 +2,8 @@
 
 require 'map_tile_generator'
 require 'map_config'
+require 'road_generator'
+require 'pry-byebug'
 
 class Map
   attr_reader :config
@@ -30,6 +32,18 @@ class Map
   # rubocop:enable Naming/MethodParameterName:
 
   def tiles
-    @tiles ||= MapTileGenerator.new(map: self).generate
+    @tiles ||=
+      begin
+        map_tiles = generate_tiles
+        # binding.pry
+        RoadGenerator.new(map_tiles).generate(0, 0, 50, 50).each(&:make_road)
+        map_tiles
+      end
+  end
+
+  private
+
+  def generate_tiles
+    MapTileGenerator.new(map: self).generate
   end
 end

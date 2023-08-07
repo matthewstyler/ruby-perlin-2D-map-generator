@@ -4,15 +4,23 @@ require 'biome'
 require 'flora'
 
 class Tile
-  attr_reader :x, :y, :height, :moist, :temp, :map
+  attr_reader :x, :y, :height, :moist, :temp, :map, :type
 
-  def initialize(map:, x:, y:, height: 0, moist: 0, temp: 0)
+  TYPES = [
+    :biome,
+    :road
+  ].freeze
+
+  def initialize(map:, x:, y:, height: 0, moist: 0, temp: 0, type: :biome)
     @x = x
     @y = y
     @height = height
     @moist = moist
     @temp = temp
     @map = map
+    raise ArgumentError, 'invalid tile type' unless TYPES.include?(type)
+
+    @type = type
   end
 
   def surrounding_tiles(distance = 1)
@@ -36,7 +44,7 @@ class Tile
   end
 
   def render_to_standard_output
-    print biome.colour + (!items.empty? ? item_with_highest_priority.render_symbol : '  ')
+    print render_color_by_type + (!items.empty? ? item_with_highest_priority.render_symbol : '  ')
     print AnsiColours::Background::ANSI_RESET
   end
 
@@ -58,11 +66,23 @@ class Tile
       moist: moist,
       temp: temp,
       biome: biome.to_h,
-      items: items.map(&:to_h)
+      items: items.map(&:to_h),
+      type: type
     }
   end
 
+  def make_road
+    @type = :road
+  end
+
   private
+
+  def render_color_by_type
+    case type
+    when :biome then biome.colour
+    when :road then "\e[48;5;239m"
+    end
+  end
 
   def items_generated_with_flora_if_applicable
     if map.config.generate_flora && biome.flora_available

@@ -15,6 +15,7 @@ class TileTest < Minitest::Test
     @height = 0.5
     @moist = 0.5
     @temp = 0.5
+    @type = :biome
 
     @tile = Tile.new(
       map: @map,
@@ -22,7 +23,8 @@ class TileTest < Minitest::Test
       y: @y,
       height: @height,
       moist: @moist,
-      temp: @temp
+      temp: @temp,
+      type: @type
     )
   end
 
@@ -33,6 +35,7 @@ class TileTest < Minitest::Test
     assert_equal @height, @tile.height
     assert_equal @moist, @tile.moist
     assert_equal @temp, @tile.temp
+    assert_equal @type, @tile.type
   end
 
   def test_surrounding_tiles
@@ -135,9 +138,34 @@ class TileTest < Minitest::Test
       moist: @moist,
       temp: @temp,
       biome: biome_hash,
-      items: [tile_item_hash]
+      items: [tile_item_hash],
+      type: :biome
     }
 
     assert_equal expected_hash, @tile.to_h
+  end
+
+  def test_invalid_tile_type_raises_error
+    result = assert_raises ArgumentError, 'invalid tile type' do
+      Tile.new(
+        map: @map,
+        x: @x,
+        y: @y,
+        type: :not_real
+      )
+    end
+    
+    assert_equal 'invalid tile type', result.to_s
+  end
+
+  def test_make_road
+    tile = Tile.new(
+      map: @map,
+      x: @x,
+      y: @y
+    )
+    assert_equal :biome, tile.type
+    tile.make_road
+    assert_equal :road, tile.type
   end
 end
