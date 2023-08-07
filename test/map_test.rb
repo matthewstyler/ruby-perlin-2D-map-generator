@@ -3,6 +3,7 @@
 require 'test_helper'
 require 'mocha/minitest'
 require 'map'
+require 'road_generator'
 
 class MapTest < Minitest::Test
   def test_initialize_with_default_config
@@ -18,9 +19,15 @@ class MapTest < Minitest::Test
 
   def test_initialize_with_custom_config
     map_config = mock('MapConfig')
+    map_config.expects(:roads).returns(1)
     generator_mock = mock('MapTileGenerator')
+    road_generator_mock = mock('RoadGenerator')
+
     MapTileGenerator.expects(:new).with(anything).returns(generator_mock)
     generator_mock.expects(:generate).returns([['Test2']])
+
+    RoadGenerator.expects(:new).with([['Test2']]).returns(road_generator_mock)
+    road_generator_mock.expects(:generate_num_of_roads).with(1)
 
     map = Map.new(map_config: map_config)
 
