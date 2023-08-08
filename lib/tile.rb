@@ -3,6 +3,7 @@
 require 'biome'
 require 'flora'
 require 'ansi_colours'
+require 'pry-byebug'
 
 class Tile
   attr_reader :x, :y, :height, :moist, :temp, :map, :type
@@ -59,6 +60,10 @@ class Tile
     items.max_by(&:render_priority)
   end
 
+  def items_contain_flora?
+    items.any? { |i| i.is_a?(Flora) }
+  end
+
   def to_h
     {
       x: x,
@@ -81,7 +86,7 @@ class Tile
   end
 
   def can_contain_road?
-    return true unless biome_is_water_and_is_excluded? || biome_is_high_mountain_and_is_excluded?
+    return true unless biome_is_water_and_is_excluded? || biome_is_high_mountain_and_is_excluded? || tile_contains_flora_and_is_excluded?
   end
 
   private
@@ -92,6 +97,10 @@ class Tile
 
   def biome_is_high_mountain_and_is_excluded?
     biome.high_mountain? && map.config.road_config.road_exclude_mountain_path
+  end
+
+  def tile_contains_flora_and_is_excluded?
+    map.config.road_config.road_exclude_flora_path && items_contain_flora?
   end
 
   def render_color_by_type

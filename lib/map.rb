@@ -31,12 +31,10 @@ class Map
   # rubocop:enable Naming/MethodParameterName:
 
   def tiles
-    @tiles ||=
-      begin
-        map_tiles = generate_tiles
-        RoadGenerator.new(map_tiles).generate_num_of_roads(config.road_config)
-        map_tiles
-      end
+    return @tiles if @tiles
+    @tiles = generate_tiles
+    RoadGenerator.new(@tiles).generate_num_of_roads(config.road_config)
+    @tiles
   end
 
   private

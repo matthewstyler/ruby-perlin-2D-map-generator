@@ -273,6 +273,15 @@ module CLI
       default MapConfig::DEFAULT_ROAD_EXCLUDE_MOUNTAIN_PATH
     end
 
+    option :road_exclude_flora_path do
+      long '--road_exclude_flora_path bool'
+      long '--road_exclude_flora_path=bool'
+
+      desc 'Controls if roads will run tiles containing flora'
+      convert :bool
+      default MapConfig::DEFAULT_ROAD_EXCLUDE_FLORA_PATH
+    end
+
     flag :help do
       short '-h'
       long '--help'
@@ -300,7 +309,7 @@ module CLI
         perlin_moist_config: perlin_moist_config,
         perlin_temp_config: perlin_temp_config,
         generate_flora: params[:generate_flora],
-        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path, :road_exclude_mountain_path).values)
+        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path, :road_exclude_mountain_path, :road_exclude_flora_path).values)
       ))
       case params[:command]
       when 'render' then map.render

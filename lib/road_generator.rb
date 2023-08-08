@@ -2,7 +2,6 @@
 
 require 'pathfinding/grid'
 require 'pathfinding/a_star_finder'
-require 'pry-byebug'
 
 class RoadGenerator
   attr_reader :grid, :finder
