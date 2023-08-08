@@ -3,6 +3,9 @@
 require 'pathfinding/grid'
 require 'pathfinding/a_star_finder'
 
+#
+# Generates roads across map tiles, randomly or given specific coordinates
+#
 class RoadGenerator
   attr_reader :grid, :finder
 

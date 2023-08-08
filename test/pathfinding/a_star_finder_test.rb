@@ -8,11 +8,13 @@ class TestAStarFinder < Minitest::Test
   class Node
     attr_reader :x, :y
 
-    def initialize(x, y, can_contain_road = true)
+    # rubocop:disable Naming/MethodParameterName:
+    def initialize(x, y, can_contain_road: true)
       @x = x
       @y = y
       @can_contain_road = can_contain_road
     end
+    # rubocop:enable Naming/MethodParameterName:
 
     def path_heuristic
       0
@@ -100,8 +102,8 @@ class TestAStarFinder < Minitest::Test
 
   def test_finds_path_with_non_walkable_paths
     nodes = [
-      [Node.new(0, 0), Node.new(1, 0), Node.new(2, 0, false), Node.new(3, 0)],
-      [Node.new(0, 1), Node.new(1, 1, false), Node.new(2, 1, false), Node.new(3, 1)],
+      [Node.new(0, 0), Node.new(1, 0), Node.new(2, 0, can_contain_road: false), Node.new(3, 0)],
+      [Node.new(0, 1), Node.new(1, 1, can_contain_road: false), Node.new(2, 1, can_contain_road: false), Node.new(3, 1)],
       [Node.new(0, 2), Node.new(1, 2), Node.new(2, 2), Node.new(3, 2)],
       [Node.new(0, 3), Node.new(1, 3), Node.new(2, 3), Node.new(3, 3)]
     ]

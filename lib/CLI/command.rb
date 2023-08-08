@@ -46,7 +46,7 @@ module CLI
 
     option :roads_to_make do
       arity one
-      long "--roads_to_make ints"
+      long '--roads_to_make ints'
       convert :int_list
       validate ->(v) { v >= 0 }
       desc 'Attempt to create a road from a start and end point (4 integers), can be supplied multiple paths'
@@ -222,7 +222,7 @@ module CLI
       long '--temp float'
       long '--temp=float'
 
-      desc 'Adjust each generated temperature by this percent (0 - 100)'
+      desc 'Adjust each generated temperature by this percent (-100 - 100)'
       convert ->(val) { val.to_f / 100.0 }
       validate ->(val) { val >= -1.0 && val <= 1.0 }
       default MapConfig::DEFAULT_TEMP_ADJUSTMENT
@@ -232,7 +232,7 @@ module CLI
       long '--elevation float'
       long '--elevation=float'
 
-      desc 'Adjust each generated elevation by this percent (0 - 100)'
+      desc 'Adjust each generated elevation by this percent (-100 - 100)'
       convert ->(val) { val.to_f / 100.0 }
       validate ->(val) { val >= -1.0 && val <= 1.0 }
       default MapConfig::DEFAULT_HEIGHT_ADJUSTMENT
@@ -242,7 +242,7 @@ module CLI
       long '--moisture float'
       long '--moisture=float'
 
-      desc 'Adjust each generated moisture by this percent (0 - 100)'
+      desc 'Adjust each generated moisture by this percent (-100 - 100)'
       convert ->(val) { val.to_f / 100.0 }
       validate ->(val) { val >= -1.0 && val <= 1.0 }
       default MapConfig::DEFAULT_MOIST_ADJUSTMENT
@@ -317,9 +317,7 @@ module CLI
       map = Map.new(map_config: MapConfig.new(
         width: params[:width],
         height: params[:height],
-        perlin_height_config: perlin_height_config,
-        perlin_moist_config: perlin_moist_config,
-        perlin_temp_config: perlin_temp_config,
+        all_perlin_configs: MapConfig::AllPerlinConfigs.new(perlin_height_config, perlin_moist_config, perlin_temp_config),
         generate_flora: params[:generate_flora],
         road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path, :road_exclude_mountain_path, :road_exclude_flora_path, :roads_to_make).values)
       ))

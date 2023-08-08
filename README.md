@@ -58,11 +58,11 @@ See Command line Usage for full customization, below are some examples. Alter th
 --rs=int            The seed for generating roads
                          (default 100)
 
---elevation=float  Adjust each generated elevation by this percent (0 -
+--elevation=float  Adjust each generated elevation by this percent (-100 -
                          100) (default 0.0)
---moisture=float   Adjust each generated moisture by this percent (0 -
+--moisture=float   Adjust each generated moisture by this percent (-100 -
                          100) (default 0.0)
---temp=float       Adjust each generated temperature by this percent (0
+--temp=float       Adjust each generated temperature by this percent (-100
                          - 100) (default 0.0)
 ```
 
@@ -148,7 +148,7 @@ Keywords:
 
 Options:
       --elevation=float                  Adjust each generated elevation by
-                                         this percent (0 - 100) (default 0.0)
+                                         this percent (-100 - 100) (default 0.0)
       --fhx=float                        The frequency for height generation
                                          across the x-axis (default 2.5)
       --fhy=float                        The frequency for height generation
@@ -169,7 +169,7 @@ Options:
       --hs=int                           The seed for a terrains height perlin
                                          generation (default 10)
       --moisture=float                   Adjust each generated moisture by
-                                         this percent (0 - 100) (default 0.0)
+                                         this percent (-100 - 100) (default 0.0)
       --ms=int                           The seed for a terrains moist perlin
                                          generation (default 300)
       --oh=int                           Octaves for height generation
@@ -200,7 +200,7 @@ Options:
       --rs=int                           The seed for generating roads
                                          (default 100)
       --temp=float                       Adjust each generated temperature by
-                                         this percent (0 - 100) (default 0.0)
+                                         this percent (-100 - 100) (default 0.0)
       --ts=int                           The seed for a terrains temperature
                                          perlin generation (default 3000)
       --width=int                        The width of the generated map

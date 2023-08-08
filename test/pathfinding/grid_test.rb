@@ -18,11 +18,13 @@ class GridTest < Minitest::Test
     # Replace this with your Node class implementation or use a mock/fake Node class.
     attr_reader :x, :y
 
+    # rubocop:disable Naming/MethodParameterName:
     def initialize(x, y, road)
       @x = x
       @y = y
       @road = road
     end
+    # rubocop:enable Naming/MethodParameterName:
 
     def can_contain_road?
       @road

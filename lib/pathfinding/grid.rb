@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Pathfinding
+  #
+  # Responsible for manipulating and encapsulating behaviour of tiles related
+  # to pathfinding
+  #
   class Grid
     attr_reader :nodes
 
@@ -8,9 +12,11 @@ module Pathfinding
       @nodes = nodes
     end
 
+    # rubocop:disable Naming/MethodParameterName:
     def node(x, y)
       nodes[y][x]
     end
+    # rubocop:enable Naming/MethodParameterName:
 
     def neighbors(node)
       neighbors = []

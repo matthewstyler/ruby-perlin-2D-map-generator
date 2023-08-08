@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Pathfinding
+  #
+  # An A* Pathfinder to build roads/paths between two coordinates containing
+  # different path costs, the heuristic behaviour that can be altered via configuration
+  #
   class AStarFinder
     def find_path(start_node, end_node, grid)
       open_set = [start_node]

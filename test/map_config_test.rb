@@ -43,9 +43,7 @@ class MapConfigTest < Minitest::Test
     @generate_flora = false
 
     @map_config = MapConfig.new(
-      perlin_height_config: @perlin_height_config,
-      perlin_moist_config: @perlin_moist_config,
-      perlin_temp_config: @perlin_temp_config,
+      all_perlin_configs: MapConfig::AllPerlinConfigs.new(@perlin_height_config, @perlin_moist_config, @perlin_temp_config),
       width: @width,
       height: @height,
       generate_flora: @generate_flora
@@ -65,9 +63,7 @@ class MapConfigTest < Minitest::Test
     invalid_perlin_height_config = :invalid
     assert_raises(ArgumentError) do
       MapConfig.new(
-        perlin_height_config: invalid_perlin_height_config,
-        perlin_moist_config: @perlin_moist_config,
-        perlin_temp_config: @perlin_temp_config
+        all_perlin_configs: MapConfig::AllPerlinConfigs.new(invalid_perlin_height_config, @perlin_moist_config, @perlin_temp_config)
       )
     end
   end
@@ -76,9 +72,7 @@ class MapConfigTest < Minitest::Test
     invalid_perlin_moist_config = :invalid
     assert_raises(ArgumentError) do
       MapConfig.new(
-        perlin_height_config: @perlin_height_config,
-        perlin_moist_config: invalid_perlin_moist_config,
-        perlin_temp_config: @perlin_temp_config
+        all_perlin_configs: MapConfig::AllPerlinConfigs.new(@perlin_height_config, invalid_perlin_moist_config, @perlin_temp_config)
       )
     end
   end
