@@ -14,13 +14,19 @@ module Pathfinding
 
     def neighbors(node)
       neighbors = []
+      return neighbors unless node.can_contain_road?
+
       x = node.x
       y = node.y
 
-      neighbors << node(x - 1, y) if x.positive? && !node(x - 1, y).nil? && node.can_contain_road?
-      neighbors << node(x + 1, y) if x < @nodes[0].size - 1 && !node(x + 1, y).nil? && node.can_contain_road?
-      neighbors << node(x, y - 1) if y.positive? && !node(x, y - 1).nil? && node.can_contain_road?
-      neighbors << node(x, y + 1) if y < @nodes.size - 1 && !node(x, y + 1).nil? && node.can_contain_road?
+      node_lookup = node(x - 1, y) if x.positive?
+      neighbors << node_lookup if !node_lookup.nil? && node_lookup.can_contain_road?
+      node_lookup = node(x + 1, y) if x < @nodes[0].size - 1
+      neighbors << node_lookup if !node_lookup.nil? && node_lookup.can_contain_road?
+      node_lookup = node(x, y - 1) if y.positive?
+      neighbors << node_lookup if !node_lookup.nil? && node_lookup.can_contain_road?
+      node_lookup = node(x, y + 1) if y < @nodes.size - 1
+      neighbors << node_lookup if !node_lookup.nil? && node_lookup.can_contain_road?
 
       neighbors
     end

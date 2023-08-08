@@ -12,7 +12,7 @@ module CLI
 
       no_command
 
-      desc 'Generate a seeded customizable procedurally generated 2D map. Rendered in the console ' \
+      desc 'Generate a seeded customizable procedurally generated 2D map with optional roads. Rendered in the console ' \
            ' using ansi colours, or described as a 2D array of hashes with each tiles information.'
 
       example 'Render with defaults',
@@ -20,6 +20,9 @@ module CLI
 
       example 'Render with options',
               '  $ ruby-perlin-2D-map-generator render --elevation=-40 --moisture=25 --hs=1'
+      
+      example 'Render with roads',
+              '  $ ruby-perlin-2D-map-generator render --roads=2'
 
       example 'Describe tile [1, 1]',
               '  $ ruby-perlin-2D-map-generator describe coordinates=1,1'

@@ -9,11 +9,11 @@ class Tile
   attr_reader :x, :y, :height, :moist, :temp, :map, :type
 
   TYPES = %i[
-    biome
+    terrain
     road
   ].freeze
 
-  def initialize(map:, x:, y:, height: 0, moist: 0, temp: 0, type: :biome)
+  def initialize(map:, x:, y:, height: 0, moist: 0, temp: 0, type: :terrain)
     @x = x
     @y = y
     @height = height
@@ -109,7 +109,7 @@ class Tile
 
   def render_color_by_type
     case type
-    when :biome then biome.colour
+    when :terrain then biome.colour
     when :road
       case height
       when 0.66..1

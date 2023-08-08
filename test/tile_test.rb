@@ -15,7 +15,7 @@ class TileTest < Minitest::Test
     @height = 0.5
     @moist = 0.5
     @temp = 0.5
-    @type = :biome
+    @type = :terrain
 
     @tile = Tile.new(
       map: @map,
@@ -139,7 +139,7 @@ class TileTest < Minitest::Test
       temp: @temp,
       biome: biome_hash,
       items: [tile_item_hash],
-      type: :biome
+      type: :terrain
     }
 
     assert_equal expected_hash, @tile.to_h
@@ -164,7 +164,7 @@ class TileTest < Minitest::Test
       x: @x,
       y: @y
     )
-    assert_equal :biome, tile.type
+    assert_equal :terrain, tile.type
     tile.make_road
     assert_equal :road, tile.type
   end
