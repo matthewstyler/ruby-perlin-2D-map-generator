@@ -11,7 +11,7 @@ class RoadGenerator
     @finder = Pathfinding::AStarFinder.new
   end
 
-  def generate_num_of_roads(config)
+  def generate_num_of_random_roads(config)
     return if config.roads <= 0
 
     seed = config.road_seed
@@ -22,6 +22,17 @@ class RoadGenerator
         random_objects_at_edges[0].y,
         random_objects_at_edges[1].x,
         random_objects_at_edges[1].y
+      ).each(&:make_road)
+    end
+  end
+
+  def generate_roads_from_coordinate_list(road_paths)
+    road_paths.each_slice(4) do |road_coordinates|
+      generate_path(
+        road_coordinates[0],
+        road_coordinates[1],
+        road_coordinates[2],
+        road_coordinates[3]
       ).each(&:make_road)
     end
   end

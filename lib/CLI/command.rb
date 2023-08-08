@@ -20,7 +20,7 @@ module CLI
 
       example 'Render with options',
               '  $ ruby-perlin-2D-map-generator render --elevation=-40 --moisture=25 --hs=1'
-      
+
       example 'Render with roads',
               '  $ ruby-perlin-2D-map-generator render --roads=2'
 
@@ -42,6 +42,15 @@ module CLI
       convert :int_list
       validate ->(v) { v >= 0 }
       desc 'Used with the describe command, only returns the given coordinate tile details'
+    end
+
+    option :roads_to_make do
+      arity one
+      long "--roads_to_make ints"
+      convert :int_list
+      validate ->(v) { v >= 0 }
+      desc 'Attempt to create a road from a start and end point (4 integers), can be supplied multiple paths'
+      default MapConfig::DEFAULT_ROADS_TO_MAKE
     end
 
     option :height_seed do
@@ -312,7 +321,7 @@ module CLI
         perlin_moist_config: perlin_moist_config,
         perlin_temp_config: perlin_temp_config,
         generate_flora: params[:generate_flora],
-        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path, :road_exclude_mountain_path, :road_exclude_flora_path).values)
+        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path, :road_exclude_mountain_path, :road_exclude_flora_path, :roads_to_make).values)
       ))
       case params[:command]
       when 'render' then map.render

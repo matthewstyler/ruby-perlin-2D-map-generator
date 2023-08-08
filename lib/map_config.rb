@@ -30,9 +30,10 @@ class MapConfig
   DEFAULT_ROAD_EXCLUDE_WATER_PATH    = true
   DEFAULT_ROAD_EXCLUDE_MOUNTAIN_PATH = true
   DEFAULT_ROAD_EXCLUDE_FLORA_PATH    = true
+  DEFAULT_ROADS_TO_MAKE              = [].freeze
 
   PERLIN_CONFIG_OPTIONS = %i[width height noise_seed octaves x_frequency y_frequency persistance adjustment].freeze
-  ROAD_CONFIG_OPTIONS = %i[road_seed roads road_exclude_water_path road_exclude_mountain_path road_exclude_flora_path].freeze
+  ROAD_CONFIG_OPTIONS = %i[road_seed roads road_exclude_water_path road_exclude_mountain_path road_exclude_flora_path roads_to_make].freeze
 
   PerlinConfig = Struct.new(*PERLIN_CONFIG_OPTIONS)
   RoadConfig = Struct.new(*ROAD_CONFIG_OPTIONS)
@@ -70,6 +71,6 @@ class MapConfig
   end
 
   def default_road_config
-    RoadConfig.new(DEFAULT_ROAD_SEED, DEFAULT_NUM_OF_ROADS)
+    RoadConfig.new(DEFAULT_ROAD_SEED, DEFAULT_NUM_OF_ROADS, DEFAULT_ROAD_EXCLUDE_WATER_PATH, DEFAULT_ROAD_EXCLUDE_MOUNTAIN_PATH, DEFAULT_ROAD_EXCLUDE_FLORA_PATH, DEFAULT_ROADS_TO_MAKE)
   end
 end

@@ -34,7 +34,9 @@ class Map
     return @tiles if @tiles
 
     @tiles = generate_tiles
-    RoadGenerator.new(@tiles).generate_num_of_roads(config.road_config)
+    road_generator = RoadGenerator.new(@tiles)
+    road_generator.generate_num_of_random_roads(config.road_config)
+    road_generator.generate_roads_from_coordinate_list(config.road_config.roads_to_make)
     @tiles
   end
 

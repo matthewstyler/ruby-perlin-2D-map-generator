@@ -76,6 +76,8 @@ Roads can be configured to include/exclude generating paths thorugh water, mount
 
 Tiles containing roads are of type `road`, those without are of type `terrain`. 
 
+The `--roads_to_make` option allows you to specify multiple pairs of coordinates to attempt to build paths, subject to the heuristic and other option constraints. Expects a a single list, but must be sets of 4, example of two roads: `--roads_to_make=0,0,50,50,0,0,75,75`
+
 # Generate without rendering
 
 ```irb
@@ -191,6 +193,10 @@ Options:
       --roads=int                        Add this many roads through the map,
                                          starting and ending at edges (default
                                          0)
+      --roads_to_make ints               Attempt to create a road from a start
+                                         and end point (4 integers), can be
+                                         supplied multiple paths 
+                                         (default [])
       --rs=int                           The seed for generating roads
                                          (default 100)
       --temp=float                       Adjust each generated temperature by
