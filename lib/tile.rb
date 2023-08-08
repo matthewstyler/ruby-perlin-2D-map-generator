@@ -81,13 +81,17 @@ class Tile
   end
 
   def can_contain_road?
-    return true unless biome_is_water_and_is_excluded?
+    return true unless biome_is_water_and_is_excluded? || biome_is_high_mountain_and_is_excluded?
   end
 
   private
 
   def biome_is_water_and_is_excluded?
     biome.water? && map.config.road_config.road_exclude_water_path
+  end
+
+  def biome_is_high_mountain_and_is_excluded?
+    biome.high_mountain? && map.config.road_config.road_exclude_mountain_path
   end
 
   def render_color_by_type
