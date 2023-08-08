@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name          = 'ruby-perlin-2D-map-generator'
-  s.version       = '0.0.4'
+  s.version       = '0.0.5'
   s.summary       = 'Procedurally generate seeded and customizable 2D maps with optional roads, rendered with ansi colours or described in a 2D array of hashes'
   s.description   = 'A gem that procedurally generates a seeded and customizable 2D map with optional roads using perlin noise. Map can be rendered in console ' \
                     'using ansi colors or returned as 2D array of hashes describing each tile and binome. Completely ' \
