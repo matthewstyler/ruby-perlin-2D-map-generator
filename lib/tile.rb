@@ -81,6 +81,10 @@ class Tile
     @type = :road
   end
 
+  def road?
+    @type == :road
+  end
+
   def path_heuristic
     height
   end
@@ -100,7 +104,7 @@ class Tile
   end
 
   def tile_contains_flora_and_is_excluded?
-    map.config.road_config.road_exclude_flora_path && items_contain_flora?
+    items_contain_flora? && map.config.road_config.road_exclude_flora_path
   end
 
   def render_color_by_type

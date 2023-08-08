@@ -32,6 +32,7 @@ class Map
 
   def tiles
     return @tiles if @tiles
+
     @tiles = generate_tiles
     RoadGenerator.new(@tiles).generate_num_of_roads(config.road_config)
     @tiles

@@ -21,6 +21,10 @@ class TestAStarFinder < Minitest::Test
     def can_contain_road?
       @can_contain_road
     end
+
+    def road?
+      false
+    end
   end
 
   def setup

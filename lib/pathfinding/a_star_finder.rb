@@ -35,9 +35,10 @@ module Pathfinding
     private
 
     def heuristic_cost_estimate(node, end_node)
-      (node.x - end_node.x).abs
-      (node.y - end_node.y).abs
-      + (node.path_heuristic - end_node.path_heuristic) # elevation for natural roads
+      (node.x - end_node.x).abs +
+        (node.y - end_node.y).abs +
+        (node.path_heuristic - end_node.path_heuristic) + # elevation for natural roads
+        (node.road? ? 0 : 5) # share existing roads
     end
 
     def reconstruct_path(came_from, current_node)
