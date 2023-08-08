@@ -172,4 +172,23 @@ class TileTest < Minitest::Test
   def test_tile_path_heuristic_is_elevatione
     assert_equal @tile.height, @tile.path_heuristic
   end
+
+  def test_tile_can_contain_road
+    tile = Tile.new(
+      map: @map,
+      x: @x,
+      y: @y,
+      height: @height,
+      moist: @moist,
+      temp: @temp,
+      type: @type
+    )
+
+    assert tile.can_contain_road?
+
+    tile.biome.expects(:water?).returns(true)
+    @map.config.expects(:road_config).returns(OpenStruct.new(road_exclude_water_path: true))
+
+    refute tile.can_contain_road?
+  end
 end

@@ -255,6 +255,15 @@ module CLI
       default MapConfig::DEFAULT_ROAD_SEED
     end
 
+    option :road_exclude_water_path do
+      long '--road_exclude_water_path bool'
+      long '--road_exclude_water_path=bool'
+
+      desc 'Controls if roads will run through water'
+      convert :bool
+      default MapConfig::DEFAULT_ROAD_EXCLUDE_WATER_PATH
+    end
+
     flag :help do
       short '-h'
       long '--help'
@@ -282,7 +291,7 @@ module CLI
         perlin_moist_config: perlin_moist_config,
         perlin_temp_config: perlin_temp_config,
         generate_flora: params[:generate_flora],
-        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads).values)
+        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path).values)
       ))
       case params[:command]
       when 'render' then map.render

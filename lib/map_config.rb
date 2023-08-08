@@ -25,11 +25,12 @@ class MapConfig
   DEFAULT_TEMP_X_FREQUENCY = 2.5
   DEFAULT_TEMP_ADJUSTMENT  = 0.0
 
-  DEFAULT_ROAD_SEED        = 100
-  DEFAULT_NUM_OF_ROADS     = 0
+  DEFAULT_ROAD_SEED               = 100
+  DEFAULT_ROAD_EXCLUDE_WATER_PATH = true
+  DEFAULT_NUM_OF_ROADS            = 0
 
   PERLIN_CONFIG_OPTIONS = %i[width height noise_seed octaves x_frequency y_frequency persistance adjustment].freeze
-  ROAD_CONFIG_OPTIONS = %i[road_seed roads].freeze
+  ROAD_CONFIG_OPTIONS = %i[road_seed roads road_exclude_water_path].freeze
 
   PerlinConfig = Struct.new(*PERLIN_CONFIG_OPTIONS)
   RoadConfig = Struct.new(*ROAD_CONFIG_OPTIONS)

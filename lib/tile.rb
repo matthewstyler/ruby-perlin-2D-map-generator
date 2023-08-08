@@ -80,7 +80,15 @@ class Tile
     height
   end
 
+  def can_contain_road?
+    return true unless biome_is_water_and_is_excluded?
+  end
+
   private
+
+  def biome_is_water_and_is_excluded?
+    biome.water? && map.config.road_config.road_exclude_water_path
+  end
 
   def render_color_by_type
     case type
