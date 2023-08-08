@@ -12,7 +12,7 @@ Include the gem in your project, or use the executable from the command line.
 Map can be rendered in console using ansi colors or returned as 2D array of hashes describing each tile and binome. Completely customizable, use the --help option for full usage details.
 
 
-![2D-maps](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/assets/4560901/4fa5883f-839a-40c9-86a1-d5f9e2c37b9a)
+![2D-maps](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/assets/4560901/43b008e9-c9c7-422a-9abe-cbe6083fd138)
 
 
 # Installation
