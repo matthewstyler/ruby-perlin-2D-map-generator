@@ -12,7 +12,7 @@ module CLI
 
       no_command
 
-      desc 'Generate a seeded customizable procedurally generated 2D map. Rendered in the console ' \
+      desc 'Generate a seeded customizable procedurally generated 2D map with optional roads. Rendered in the console ' \
            ' using ansi colours, or described as a 2D array of hashes with each tiles information.'
 
       example 'Render with defaults',
@@ -20,6 +20,9 @@ module CLI
 
       example 'Render with options',
               '  $ ruby-perlin-2D-map-generator render --elevation=-40 --moisture=25 --hs=1'
+
+      example 'Render with roads',
+              '  $ ruby-perlin-2D-map-generator render --roads=2'
 
       example 'Describe tile [1, 1]',
               '  $ ruby-perlin-2D-map-generator describe coordinates=1,1'
@@ -39,6 +42,15 @@ module CLI
       convert :int_list
       validate ->(v) { v >= 0 }
       desc 'Used with the describe command, only returns the given coordinate tile details'
+    end
+
+    option :roads_to_make do
+      arity one
+      long '--roads_to_make ints'
+      convert :int_list
+      validate ->(v) { v >= 0 }
+      desc 'Attempt to create a road from a start and end point (4 integers), can be supplied multiple paths'
+      default MapConfig::DEFAULT_ROADS_TO_MAKE
     end
 
     option :height_seed do
@@ -210,7 +222,7 @@ module CLI
       long '--temp float'
       long '--temp=float'
 
-      desc 'Adjust each generated temperature by this percent (0 - 100)'
+      desc 'Adjust each generated temperature by this percent (-100 - 100)'
       convert ->(val) { val.to_f / 100.0 }
       validate ->(val) { val >= -1.0 && val <= 1.0 }
       default MapConfig::DEFAULT_TEMP_ADJUSTMENT
@@ -220,7 +232,7 @@ module CLI
       long '--elevation float'
       long '--elevation=float'
 
-      desc 'Adjust each generated elevation by this percent (0 - 100)'
+      desc 'Adjust each generated elevation by this percent (-100 - 100)'
       convert ->(val) { val.to_f / 100.0 }
       validate ->(val) { val >= -1.0 && val <= 1.0 }
       default MapConfig::DEFAULT_HEIGHT_ADJUSTMENT
@@ -230,10 +242,56 @@ module CLI
       long '--moisture float'
       long '--moisture=float'
 
-      desc 'Adjust each generated moisture by this percent (0 - 100)'
+      desc 'Adjust each generated moisture by this percent (-100 - 100)'
       convert ->(val) { val.to_f / 100.0 }
       validate ->(val) { val >= -1.0 && val <= 1.0 }
       default MapConfig::DEFAULT_MOIST_ADJUSTMENT
+    end
+
+    option :roads do
+      long '--roads int'
+      long '--roads=int'
+
+      desc 'Add this many roads through the map, starting and ending at edges'
+      convert Integer
+      validate ->(val) { val >= 0 }
+      default MapConfig::DEFAULT_NUM_OF_ROADS
+    end
+
+    option :road_seed do
+      long '--rs int'
+      long '--rs=int'
+
+      desc 'The seed for generating roads'
+      convert Integer
+      default MapConfig::DEFAULT_ROAD_SEED
+    end
+
+    option :road_exclude_water_path do
+      long '--road_exclude_water_path bool'
+      long '--road_exclude_water_path=bool'
+
+      desc 'Controls if roads will run through water'
+      convert :bool
+      default MapConfig::DEFAULT_ROAD_EXCLUDE_WATER_PATH
+    end
+
+    option :road_exclude_mountain_path do
+      long '--road_exclude_mountain_path bool'
+      long '--road_exclude_mountain_path=bool'
+
+      desc 'Controls if roads will run through high mountains'
+      convert :bool
+      default MapConfig::DEFAULT_ROAD_EXCLUDE_MOUNTAIN_PATH
+    end
+
+    option :road_exclude_flora_path do
+      long '--road_exclude_flora_path bool'
+      long '--road_exclude_flora_path=bool'
+
+      desc 'Controls if roads will run tiles containing flora'
+      convert :bool
+      default MapConfig::DEFAULT_ROAD_EXCLUDE_FLORA_PATH
     end
 
     flag :help do
@@ -259,10 +317,9 @@ module CLI
       map = Map.new(map_config: MapConfig.new(
         width: params[:width],
         height: params[:height],
-        perlin_height_config: perlin_height_config,
-        perlin_moist_config: perlin_moist_config,
-        perlin_temp_config: perlin_temp_config,
-        generate_flora: params[:generate_flora]
+        all_perlin_configs: MapConfig::AllPerlinConfigs.new(perlin_height_config, perlin_moist_config, perlin_temp_config),
+        generate_flora: params[:generate_flora],
+        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path, :road_exclude_mountain_path, :road_exclude_flora_path, :roads_to_make).values)
       ))
       case params[:command]
       when 'render' then map.render

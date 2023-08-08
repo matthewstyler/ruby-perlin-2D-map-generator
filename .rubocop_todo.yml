@@ -29,7 +29,9 @@ Metrics/AbcSize:
 Metrics/ClassLength:
   Exclude:
     - 'lib/CLI/command.rb'
-  Max: 197
+    - 'lib/biome.rb'
+    - 'test/**/*'
+  Max: 150
 
 # Offense count: 2
 # Configuration parameters: AllowedMethods, AllowedPatterns.
@@ -45,6 +47,8 @@ Metrics/MethodLength:
 # Configuration parameters: CountKeywordArgs, MaxOptionalParameters.
 Metrics/ParameterLists:
   Max: 6
+  Exclude:
+      - 'lib/tile.rb'
 
 # Offense count: 2
 # Configuration parameters: AllowedMethods, AllowedPatterns.

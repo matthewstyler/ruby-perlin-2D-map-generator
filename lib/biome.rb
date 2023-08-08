@@ -32,6 +32,10 @@ class Biome
     TAIGA_TERRAIN.include?(self)
   end
 
+  def high_mountain?
+    HIGH_MOUNTAIN.include?(self)
+  end
+
   def flora_available
     !flora_range.nil?
   end
@@ -130,6 +134,12 @@ class Biome
     TAIGA_HIGHLAND,
     TAIGA_VALLEY,
     TAIGA_COAST
+  ].freeze
+
+  HIGH_MOUNTAIN = [
+    SNOW,
+    ROCKS,
+    MOUNTAIN
   ].freeze
 
   LAND_TERRAIN = (ALL_TERRAIN - WATER_TERRAIN).freeze
