@@ -6,6 +6,7 @@ Minitest::TestTask.create(:test) do |t|
   t.libs << 'test'
   t.libs << 'lib'
   t.warning = false
+  t.test_prelude = %(require "test/test_helper") # simple cov is before framework
   t.test_globs = ['test/**/*_test.rb']
 end
 
