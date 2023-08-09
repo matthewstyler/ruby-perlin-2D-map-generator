@@ -24,6 +24,9 @@ jobs:
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CLIMATE_REPORTER_ID}}
+        with:
+          coverageLocations: |
+            /home/runner/work/ruby-perlin-2D-map-generator/ruby-perlin-2D-map-generator/coverage:simplecov
 
   lint:
     runs-on: ubuntu-latest
