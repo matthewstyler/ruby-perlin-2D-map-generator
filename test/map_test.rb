@@ -4,6 +4,7 @@ require 'test_helper'
 require 'mocha/minitest'
 require 'map'
 require 'road_generator'
+require 'ostruct'
 
 class MapTest < Minitest::Test
   def test_initialize_with_default_config
@@ -20,21 +21,25 @@ class MapTest < Minitest::Test
   def test_initialize_with_custom_config
     map_config = mock('MapConfig')
     road_config = MapConfig::RoadConfig.new(1, 2, 3, 4, 5, [1, 2, 3, 4])
+    town_config = MapConfig::TownConfig.new(1, 1, 1)
     map_config.expects(:road_config).twice.returns(road_config)
+    map_config.expects(:town_config).returns(town_config)
     generator_mock = mock('MapTileGenerator')
     road_generator_mock = mock('RoadGenerator')
 
-    MapTileGenerator.expects(:new).with(anything).returns(generator_mock)
-    generator_mock.expects(:generate).returns([['Test2']])
+    tile = OpenStruct.new(x: 1, y: 1, can_haz_town?: true)
 
-    RoadGenerator.expects(:new).with([['Test2']]).returns(road_generator_mock)
+    MapTileGenerator.expects(:new).with(anything).returns(generator_mock)
+    generator_mock.expects(:generate).returns([[tile]])
+
+    RoadGenerator.expects(:new).with([[tile]]).returns(road_generator_mock)
     road_generator_mock.expects(:generate_num_of_random_roads).with(road_config)
     road_generator_mock.expects(:generate_roads_from_coordinate_list).with([1, 2, 3, 4])
 
     map = Map.new(map_config: map_config)
 
     assert_equal map_config, map.config
-    assert_equal [['Test2']], map.tiles
+    assert_equal [[tile]], map.tiles
   end
 
   def test_describe

@@ -3,6 +3,7 @@
 require 'map_tile_generator'
 require 'map_config'
 require 'road_generator'
+require 'town_generator'
 
 class Map
   attr_reader :config
@@ -33,16 +34,26 @@ class Map
   def tiles
     return @tiles if @tiles
 
-    @tiles = generate_tiles
-    road_generator = RoadGenerator.new(@tiles)
-    road_generator.generate_num_of_random_roads(config.road_config)
-    road_generator.generate_roads_from_coordinate_list(config.road_config.roads_to_make)
+    generate_tiles
+    generate_roads
+    generate_towns
+
     @tiles
   end
 
   private
 
   def generate_tiles
-    MapTileGenerator.new(map: self).generate
+    @tiles = MapTileGenerator.new(map: self).generate
+  end
+
+  def generate_roads
+    road_generator = RoadGenerator.new(@tiles)
+    road_generator.generate_num_of_random_roads(config.road_config)
+    road_generator.generate_roads_from_coordinate_list(config.road_config.roads_to_make)
+  end
+
+  def generate_towns
+    TownGenerator.new(@tiles).generate_random_towns(config.town_config)
   end
 end

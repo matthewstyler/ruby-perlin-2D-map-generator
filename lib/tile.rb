@@ -4,6 +4,7 @@ require 'biome'
 require 'flora'
 require 'ansi_colours'
 require 'pry-byebug'
+require 'town'
 
 class Tile
   attr_reader :x, :y, :height, :moist, :temp, :map, :type
@@ -64,6 +65,10 @@ class Tile
     items.any? { |i| i.is_a?(Flora) }
   end
 
+  def can_haz_town?
+    !road? && !biome.water? && !biome.high_mountain?
+  end
+
   def to_h
     {
       x: x,
@@ -75,6 +80,10 @@ class Tile
       items: items.map(&:to_h),
       type: type
     }
+  end
+
+  def add_town_item(seed)
+    add_item(Town.random_town_building(seed))
   end
 
   def make_road

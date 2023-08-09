@@ -151,21 +151,21 @@ class Biome
       case elevation
       when 0.95..1
         SNOW
-      when 0.9..0.95
+      when 0.9...0.95
         ROCKS
-      when 0.8..0.9
+      when 0.8...0.9
         if moist < 0.9
           MOUNTAIN
         else
           SHOAL
         end
-      when 0.7..0.8
+      when 0.7...0.8
         if moist < 0.9
           MOUNTAIN_FOOT
         else
           SHOAL
         end
-      when 0.6..0.7
+      when 0.6...0.7
         if moist < 0.8
           if desert_condition?(moist, temp)
             STEPPE_DESERT
@@ -179,7 +179,7 @@ class Biome
         else
           SHOAL
         end
-      when 0.3..0.6
+      when 0.3...0.6
         if desert_condition?(moist, temp)
           DESERT
         elsif taiga_condition?(moist, temp)
@@ -187,7 +187,7 @@ class Biome
         else
           VALLEY
         end
-      when 0.2..0.3
+      when 0.2...0.3
         if desert_condition?(moist, temp)
           DEEP_DESERT
         elsif taiga_condition?(moist, temp)
@@ -195,25 +195,25 @@ class Biome
         else
           DEEP_VALLEY
         end
-      when 0.15..0.2
+      when 0.15...0.2
         if taiga_condition?(moist, temp)
           TAIGA_COAST
         else
           COASTLINE
         end
-      when 0.05..0.15
+      when 0.05...0.15
         if taiga_condition?(moist, temp)
           ICE
         else
           SHOAL
         end
-      when 0.025..0.05
+      when 0.025...0.05
         if taiga_condition?(moist, temp)
           ICE
         else
           OCEAN
         end
-      when 0.0..0.025
+      when 0.0...0.025
         if taiga_condition?(moist, temp)
           ICE
         else

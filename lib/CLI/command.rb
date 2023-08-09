@@ -53,6 +53,15 @@ module CLI
       default MapConfig::DEFAULT_ROADS_TO_MAKE
     end
 
+    option :towns_to_make do
+      arity one
+      long '--towns_to_make ints'
+      convert :int_list
+      validate ->(v) { v >= 0 }
+      desc 'Attempt to create a town at given x,y coordinate, can be supplied multiple coordinates for multiple towns'
+      default MapConfig::DEFAULT_TOWNS_TO_MAKE
+    end
+
     option :height_seed do
       long '--hs int'
       # or
@@ -294,6 +303,25 @@ module CLI
       default MapConfig::DEFAULT_ROAD_EXCLUDE_FLORA_PATH
     end
 
+    option :town_seed do
+      long '--town_seed int'
+      long '--town_seed=int'
+
+      desc 'The seed for generating towns'
+      convert Integer
+      default MapConfig::DEFAULT_TOWN_SEED
+    end
+
+    option :towns do
+      long '--towns int'
+      long '--towns=int'
+
+      desc 'Add this many randomly sized towns throughout the map'
+      convert Integer
+      validate ->(val) { val >= 0 }
+      default MapConfig::DEFAULT_NUM_OF_TOWNS
+    end
+
     flag :help do
       short '-h'
       long '--help'
@@ -319,7 +347,8 @@ module CLI
         height: params[:height],
         all_perlin_configs: MapConfig::AllPerlinConfigs.new(perlin_height_config, perlin_moist_config, perlin_temp_config),
         generate_flora: params[:generate_flora],
-        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path, :road_exclude_mountain_path, :road_exclude_flora_path, :roads_to_make).values)
+        road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path, :road_exclude_mountain_path, :road_exclude_flora_path, :roads_to_make).values),
+        town_config: MapConfig::TownConfig.new(*params.to_h.slice(:town_seed, :towns, :towns_to_make).values)
       ))
       case params[:command]
       when 'render' then map.render
