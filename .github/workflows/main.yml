@@ -26,7 +26,7 @@ jobs:
           CC_TEST_REPORTER_ID: ${{secrets.CLIMATE_REPORTER_ID}}
         with:
           coverageLocations: |
-            /home/runner/work/ruby-perlin-2D-map-generator/ruby-perlin-2D-map-generator/coverage/.resultset.json:simplecov
+            /home/runner/work/ruby-perlin-2D-map-generator/ruby-perlin-2D-map-generator/coverage/coverage.json:simplecov
 
   lint:
     runs-on: ubuntu-latest
