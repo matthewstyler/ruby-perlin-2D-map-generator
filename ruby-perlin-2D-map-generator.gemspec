@@ -29,5 +29,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 13.0.6'
   s.add_development_dependency 'rubocop', '~> 1.55.1'
   s.add_development_dependency 'simplecov', '~> 0.22.0'
-  s.add_development_dependency 'simplecov-json', '~> 0.2.3'
 end
