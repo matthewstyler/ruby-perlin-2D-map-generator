@@ -10,7 +10,7 @@ module Pathfinding
       open_set = [start_node]
       came_from = {}
       g_score = { start_node => 0 }
-      f_score = { start_node => heuristic_cost_estimate(start_node, end_node) }
+      f_score = { start_node => manhatten_distance(start_node, end_node) }
 
       until open_set.empty?
         current_node = open_set.min_by { |node| f_score[node] }
@@ -39,10 +39,14 @@ module Pathfinding
     private
 
     def heuristic_cost_estimate(node, end_node)
-      (node.x - end_node.x).abs +
-        (node.y - end_node.y).abs +
+        manhatten_distance(node, end_node) +
         (node.path_heuristic - end_node.path_heuristic) + # elevation for natural roads
         (node.road? ? 0 : 1000) # share existing roads
+    end
+
+    def manhatten_distance(node, end_node)
+      (node.x - end_node.x).abs +
+        (node.y - end_node.y).abs
     end
 
     def reconstruct_path(came_from, current_node)
