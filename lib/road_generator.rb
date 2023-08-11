@@ -17,8 +17,11 @@ class RoadGenerator
   def generate_num_of_random_roads(config)
     return if config.roads <= 0
 
+    puts "generating #{config.roads} random roads..." if config.verbose
+
     seed = config.road_seed
     (1..config.roads).each do |n|
+      puts "generating road #{n}..." if config.verbose
       random_objects_at_edges = random_nodes_not_on_same_edge(seed + n) # add n otherwise each road is the same
       generate_path(
         random_objects_at_edges[0].x,
@@ -29,7 +32,11 @@ class RoadGenerator
     end
   end
 
-  def generate_roads_from_coordinate_list(road_paths)
+  def generate_roads_from_coordinate_list(road_paths, verbose)
+    return unless road_paths.length % 4 == 0
+    
+    puts "generating #{road_paths.length / 4} coordinate roads..." if verbose
+
     road_paths.each_slice(4) do |road_coordinates|
       generate_path(
         road_coordinates[0],

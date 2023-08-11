@@ -43,7 +43,7 @@ class Tile
   end
 
   def items
-    @items ||= items_generated_with_flora_if_applicable
+    @items ||= []
   end
 
   def render_to_standard_output
@@ -110,6 +110,10 @@ class Tile
     true unless biome_is_water_and_is_excluded? || biome_is_high_mountain_and_is_excluded? || tile_contains_flora_and_is_excluded? || items_contain_building?
   end
 
+  def add_flora
+    add_item(biome.flora)
+  end
+
   private
 
   def biome_is_water_and_is_excluded?
@@ -136,21 +140,6 @@ class Tile
       when 0..0.33
         AnsiColours::Background::LOW_ROAD_BLACK
       end
-    end
-  end
-
-  def items_generated_with_flora_if_applicable
-    if map.config.generate_flora && biome.flora_available
-      range_max_value = map.tiles[(y - biome.flora_range)...(y + biome.flora_range)]&.map do |r|
-        r[(x - biome.flora_range)...(x + biome.flora_range)]
-      end&.flatten&.map(&:height)&.max
-      if range_max_value == height
-        [biome.flora]
-      else
-        []
-      end
-    else
-      []
     end
   end
 end

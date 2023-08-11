@@ -322,6 +322,12 @@ module CLI
       default MapConfig::DEFAULT_NUM_OF_TOWNS
     end
 
+    option :verbose do
+      arity one
+      long '--verbose'
+      desc 'Used with the render command, outputs loading information'
+    end
+
     flag :help do
       short '-h'
       long '--help'
@@ -348,7 +354,8 @@ module CLI
         all_perlin_configs: MapConfig::AllPerlinConfigs.new(perlin_height_config, perlin_moist_config, perlin_temp_config),
         generate_flora: params[:generate_flora],
         road_config: MapConfig::RoadConfig.new(*params.to_h.slice(:road_seed, :roads, :road_exclude_water_path, :road_exclude_mountain_path, :road_exclude_flora_path, :roads_to_make).values),
-        town_config: MapConfig::TownConfig.new(*params.to_h.slice(:town_seed, :towns, :towns_to_make).values)
+        town_config: MapConfig::TownConfig.new(*params.to_h.slice(:town_seed, :towns, :towns_to_make).values),
+        verbose: params[:verbose]
       ))
       case params[:command]
       when 'render' then map.render

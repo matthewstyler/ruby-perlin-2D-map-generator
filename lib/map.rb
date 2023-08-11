@@ -35,6 +35,7 @@ class Map
     return @tiles if @tiles
 
     generate_tiles
+    generate_flora
     generate_roads
     generate_towns
 
@@ -47,10 +48,28 @@ class Map
     @tiles = MapTileGenerator.new(map: self).generate
   end
 
+  def generate_flora
+    if config.generate_flora
+      puts "generating flora..." if config.verbose
+      tiles.each do |row|
+        row.each do |tile|
+          if tile.biome.flora_available
+            range_max_value = tiles[(tile.y - tile.biome.flora_range)...(tile.y + tile.biome.flora_range)]&.map do |r|
+              r[(tile.x - tile.biome.flora_range)...(tile.x + tile.biome.flora_range)]
+            end&.flatten&.map(&:height)&.max
+            if range_max_value == tile.height
+              tile.add_flora
+            end
+          end
+        end
+      end
+    end
+  end
+
   def generate_roads
     road_generator = RoadGenerator.new(@tiles)
     road_generator.generate_num_of_random_roads(config.road_config)
-    road_generator.generate_roads_from_coordinate_list(config.road_config.roads_to_make)
+    road_generator.generate_roads_from_coordinate_list(config.road_config.roads_to_make, config.verbose)
   end
 
   def generate_towns

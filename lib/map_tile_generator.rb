@@ -15,6 +15,7 @@ class MapTileGenerator
   end
 
   def generate
+    puts "generating #{map_config.width} x #{map_config.height} tiles..."
     positive_quadrant_cartesian_plane
   end
 
