@@ -27,9 +27,7 @@ module PoissonDiskSampling
       @grid[y][x]
     end
 
-    def has_sampled_point_or_invalid?(x, y)
-      return true unless @grid[y][x].can_haz_town?
-
+    def sampled_point?(x, y)
       @points[y][x]
     end
 

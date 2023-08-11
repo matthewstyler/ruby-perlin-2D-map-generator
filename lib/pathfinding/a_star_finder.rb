@@ -42,7 +42,7 @@ module Pathfinding
       (node.x - end_node.x).abs +
         (node.y - end_node.y).abs +
         (node.path_heuristic - end_node.path_heuristic) + # elevation for natural roads
-        (node.road? ? 0 : 5) # share existing roads
+        (node.road? ? 0 : 1000) # share existing roads
     end
 
     def reconstruct_path(came_from, current_node)

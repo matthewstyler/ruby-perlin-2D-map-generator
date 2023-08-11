@@ -66,7 +66,7 @@ class Tile
   end
 
   def can_haz_town?
-    !road? && !biome.water? && !biome.high_mountain?
+    !road? && !biome.water? && !biome.high_mountain? && !items_contain_flora?
   end
 
   def to_h

@@ -9,7 +9,7 @@ module PoissonDiskSampling
   class Sampler
     attr_reader :sample_area, :num_attempts, :seed
 
-    def initialize(sample_area:, num_attempts: 5, seed: rand)
+    def initialize(sample_area:, num_attempts: 20, seed: rand)
       @sample_area = sample_area
       @num_attempts = num_attempts
       @seed = seed
@@ -27,13 +27,15 @@ module PoissonDiskSampling
     private
 
     def retrieve_points(active_list, points, num_of_points, radius)
+      return if active_list.empty?
+
       current_point, active_index = retreive_current_point(active_list)
       found = false
 
       num_attempts.times do
         new_point = generate_random_point_around(current_point, radius)
         next if new_point.nil?
-        next unless neighbours_empty?(new_point, radius)
+        next unless new_point.can_haz_town? && neighbours_empty?(new_point, radius)
 
         sample_area.set_sampled_point(new_point.x, new_point.y)
         active_list << new_point
@@ -67,7 +69,7 @@ module PoissonDiskSampling
           y = new_point.y + dy
           next unless sample_area.point_within_bounds?(x, y) && sample_area[x, y]
 
-          if sample_area.has_sampled_point_or_invalid?(x, y) && distance(new_point, sample_area[x, y]) < radius
+          if sample_area.sampled_point?(x, y) && distance(new_point, sample_area[x, y]) < radius
             cell_empty = false
             break
           end
@@ -77,12 +79,15 @@ module PoissonDiskSampling
     end
 
     def generate_and_assign_initial_point
-      # TODO: ensure valid
-      initial_point_coords = [random_value_and_increment_seed(sample_area.width), random_value_and_increment_seed(sample_area.height)]
+      num_attempts.times do
+        initial_point_coords = [random_value_and_increment_seed(sample_area.width), random_value_and_increment_seed(sample_area.height)]
 
-      sample_area.set_sampled_point(initial_point_coords[0], initial_point_coords[1])
-
-      [sample_area[initial_point_coords[0], initial_point_coords[1]]]
+        if sample_area[initial_point_coords[0], initial_point_coords[1]].can_haz_town?
+          sample_area.set_sampled_point(initial_point_coords[0], initial_point_coords[1])
+          return [sample_area[initial_point_coords[0], initial_point_coords[1]]]
+        end
+      end
+      []
     end
 
     def generate_random_point_around(point, radius)
