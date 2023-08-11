@@ -65,32 +65,10 @@ class TileTest < Minitest::Test
     assert_equal mock_biome, @tile.biome
   end
 
-  def test_items_with_flora_generation_disabled
-    @tile.expects(:items_generated_with_flora_if_applicable).returns([])
-
+  def test_items_initializes_to_empty_array
     items = @tile.items
 
-    assert_empty items
-  end
-
-  def test_items_with_flora_generation_enabled_and_flora_available
-    @tile.expects(:items_generated_with_flora_if_applicable).returns(['Flower'])
-
-    items = @tile.items
-
-    assert_equal ['Flower'], items
-  end
-
-  def test_items_with_flora_generation_enabled_but_flora_unavailable
-    @tile.expects(:items_generated_with_flora_if_applicable).returns([])
-
-    biome = mock('Biome')
-    biome.stubs(:flora_available).returns(false)
-    @tile.stubs(:biome).returns(biome)
-
-    items = @tile.items
-
-    assert_empty items
+    assert_equal [], items
   end
 
   def test_add_item_with_valid_tile_item

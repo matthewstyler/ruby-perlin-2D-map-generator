@@ -48,6 +48,7 @@ class TownGenerator
   end
 
   def generate_town_roads(points, town_num, verbose)
+    # TODO: slow, bad (complete graph) will update to use minimum tree spanning algorithm instead
     puts "generating town #{town_num} roads..." if verbose
 
     connected_pairs = Set.new
