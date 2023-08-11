@@ -62,17 +62,18 @@ class TownGenerator
       end
     end
   end
-  
+
   def place_in_front_or_behind(point)
     return [point.x, point.y + 1] if sample_area.point_within_bounds?(point.x, point.y + 1)
     return [point.x, point.y - 1] if sample_area.point_within_bounds?(point.x, point.y - 1)
+
     [point.x, point.y]
   end
 
   def generate_roads_between_towns(all_town_points, verbose)
     return if all_town_points.length < 2
 
-    puts "generating roads between towns..." if verbose
+    puts 'generating roads between towns...' if verbose
 
     connected_pairs = Set.new
     town_centroids = {}

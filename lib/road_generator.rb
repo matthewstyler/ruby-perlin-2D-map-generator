@@ -33,8 +33,8 @@ class RoadGenerator
   end
 
   def generate_roads_from_coordinate_list(road_paths, verbose)
-    return unless road_paths.length % 4 == 0
-    
+    return unless (road_paths.length % 4).zero?
+
     puts "generating #{road_paths.length / 4} coordinate roads..." if verbose
 
     road_paths.each_slice(4) do |road_coordinates|

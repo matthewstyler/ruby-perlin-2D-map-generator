@@ -60,7 +60,7 @@ class TestAStarFinder < Minitest::Test
 
     path = @astar_finder.find_path(start_node, end_node, grid)
 
-    assert_equal [start_node, grid.node(1, 0), grid.node(2, 0), grid.node(2, 1), end_node], path
+    assert_equal [start_node, grid.node(1, 0), grid.node(1, 1), grid.node(1, 2), end_node], path
   end
 
   def test_returns_empty_path_if_no_path_is_found
@@ -80,9 +80,9 @@ class TestAStarFinder < Minitest::Test
 
   def test_finds_path_with_obstacles
     nodes = [
-      [Node.new(0, 0), Node.new(1, 0), nil, Node.new(3, 0)],
-      [Node.new(0, 1), nil, nil, Node.new(3, 1)],
-      [Node.new(0, 2), Node.new(1, 2), Node.new(2, 2), Node.new(3, 2)],
+      [Node.new(0, 0), Node.new(1, 0), Node.new(2, 0, can_contain_road: false), Node.new(3, 0)],
+      [Node.new(0, 1), Node.new(1, 1, can_contain_road: false), Node.new(2, 1, can_contain_road: false), Node.new(3, 1)],
+      [Node.new(0, 2), Node.new(1, 2), Node.new(2, 2, can_contain_road: false), Node.new(3, 2)],
       [Node.new(0, 3), Node.new(1, 3), Node.new(2, 3), Node.new(3, 3)]
     ]
     grid = Pathfinding::Grid.new(nodes)
@@ -93,7 +93,7 @@ class TestAStarFinder < Minitest::Test
 
     expected_path = [
       start_node, grid.node(0, 1), grid.node(0, 2),
-      grid.node(1, 2), grid.node(2, 2), grid.node(3, 2),
+      grid.node(1, 2), grid.node(1, 3), grid.node(2, 3),
       grid.node(3, 3)
     ]
 
@@ -115,7 +115,7 @@ class TestAStarFinder < Minitest::Test
 
     expected_path = [
       start_node, grid.node(0, 1), grid.node(0, 2),
-      grid.node(1, 2), grid.node(2, 2), grid.node(3, 2),
+      grid.node(1, 2), grid.node(1, 3), grid.node(2, 3),
       grid.node(3, 3)
     ]
 

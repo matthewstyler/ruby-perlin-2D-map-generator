@@ -49,19 +49,17 @@ class Map
   end
 
   def generate_flora
-    if config.generate_flora
-      puts "generating flora..." if config.verbose
-      tiles.each do |row|
-        row.each do |tile|
-          if tile.biome.flora_available
-            range_max_value = tiles[(tile.y - tile.biome.flora_range)...(tile.y + tile.biome.flora_range)]&.map do |r|
-              r[(tile.x - tile.biome.flora_range)...(tile.x + tile.biome.flora_range)]
-            end&.flatten&.map(&:height)&.max
-            if range_max_value == tile.height
-              tile.add_flora
-            end
-          end
-        end
+    return unless config.generate_flora
+
+    puts 'generating flora...' if config.verbose
+    tiles.each do |row|
+      row.each do |tile|
+        next unless tile.biome.flora_available
+
+        range_max_value = tiles[(tile.y - tile.biome.flora_range)...(tile.y + tile.biome.flora_range)]&.map do |r|
+          r[(tile.x - tile.biome.flora_range)...(tile.x + tile.biome.flora_range)]
+        end&.flatten&.map(&:height)&.max
+        tile.add_flora if range_max_value == tile.height
       end
     end
   end
