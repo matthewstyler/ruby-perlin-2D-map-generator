@@ -26,7 +26,7 @@ class GridTest < Minitest::Test
     end
     # rubocop:enable Naming/MethodParameterName:
 
-    def can_contain_road?
+    def can_haz_road?
       @road
     end
   end
@@ -43,9 +43,9 @@ class GridTest < Minitest::Test
     neighbors = @grid.neighbors(@grid.node(1, 1))
     assert_equal 4, neighbors.size
 
-    # Assuming Node objects have a `can_contain_road?` method
+    # Assuming Node objects have a `can_haz_road?` method
     neighbors.each do |neighbor|
-      assert_equal true, neighbor.can_contain_road?
+      assert_equal true, neighbor.can_haz_road?
     end
   end
 

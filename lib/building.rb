@@ -2,7 +2,7 @@
 
 require 'tile_item'
 
-class Town < TileItem
+class Building < TileItem
   TOWN_RENDER_PRIORITY = DEFAULT_RENDER_PRIORITY + 1
 
   HOUSE = "\u{1F3E0}"
@@ -12,6 +12,6 @@ class Town < TileItem
   end
 
   def self.random_town_building(_seed)
-    Town.new(HOUSE)
+    Building.new(HOUSE)
   end
 end

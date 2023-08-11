@@ -4,7 +4,7 @@ require 'biome'
 require 'flora'
 require 'ansi_colours'
 require 'pry-byebug'
-require 'town'
+require 'building'
 
 class Tile
   attr_reader :x, :y, :height, :moist, :temp, :map, :type
@@ -62,11 +62,15 @@ class Tile
   end
 
   def items_contain_flora?
-    items.any? { |i| i.is_a?(Flora) }
+    items_contain?(Flora)
   end
 
-  def can_haz_town?
-    !road? && !biome.water? && !biome.high_mountain? && !items_contain_flora?
+  def items_contain_building?
+    items_contain?(Building)
+  end
+
+  def items_contain?(item_class)
+    items.any? { |i| i.is_a?(item_class) }
   end
 
   def to_h
@@ -83,7 +87,7 @@ class Tile
   end
 
   def add_town_item(seed)
-    add_item(Town.random_town_building(seed))
+    add_item(Building.random_town_building(seed))
   end
 
   def make_road
@@ -98,8 +102,12 @@ class Tile
     height
   end
 
-  def can_contain_road?
-    true unless biome_is_water_and_is_excluded? || biome_is_high_mountain_and_is_excluded? || tile_contains_flora_and_is_excluded?
+  def can_haz_town?
+    !road? && !biome.water? && !biome.high_mountain? && !items_contain_flora?
+  end
+
+  def can_haz_road?
+    true unless biome_is_water_and_is_excluded? || biome_is_high_mountain_and_is_excluded? || tile_contains_flora_and_is_excluded? || items_contain_building?
   end
 
   private

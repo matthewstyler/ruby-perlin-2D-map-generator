@@ -184,11 +184,11 @@ class TileTest < Minitest::Test
       type: @type
     )
 
-    assert tile.can_contain_road?
+    assert tile.can_haz_road?
 
     tile.biome.expects(:water?).returns(true)
     @map.config.expects(:road_config).returns(OpenStruct.new(road_exclude_water_path: true))
 
-    refute tile.can_contain_road?
+    refute tile.can_haz_road?
   end
 end

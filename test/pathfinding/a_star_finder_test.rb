@@ -20,7 +20,7 @@ class TestAStarFinder < Minitest::Test
       0
     end
 
-    def can_contain_road?
+    def can_haz_road?
       @can_contain_road
     end
 

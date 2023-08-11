@@ -49,12 +49,19 @@ class TownGenerator
       points[idx_one + 1..].each do |point_two|
         next if connected_pairs.include?([point_one, point_two]) || connected_pairs.include?([point_two, point_one])
 
-        road_generator.generate_roads_from_coordinate_list([point_one.x, point_one.y, point_two.x, point_two.y])
+        road_generator.generate_roads_from_coordinate_list(place_in_front_or_behind(point_one).concat(place_in_front_or_behind(point_two)))
 
         connected_pairs.add([point_one, point_two])
         connected_pairs.add([point_two, point_one])
       end
     end
+  end
+
+  def place_in_front_or_behind(point)
+    return [point.x, point.y + 1] if sample_area.point_within_bounds?(point.x, point.y + 1)
+    return [point.x, point.y - 1] if sample_area.point_within_bounds?(point.x, point.y - 1)
+
+    [point.x, point.y]
   end
 
   def generate_roads_between_towns(all_town_points)
