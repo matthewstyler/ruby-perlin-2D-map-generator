@@ -4,6 +4,7 @@ require 'map_tile_generator'
 require 'map_config'
 require 'road_generator'
 require 'town_generator'
+require 'flora_generator'
 
 class Map
   attr_reader :config
@@ -49,19 +50,7 @@ class Map
   end
 
   def generate_flora
-    return unless config.generate_flora
-
-    puts 'generating flora...' if config.verbose
-    tiles.each do |row|
-      row.each do |tile|
-        next unless tile.biome.flora_available
-
-        range_max_value = tiles[(tile.y - tile.biome.flora_range)...(tile.y + tile.biome.flora_range)]&.map do |r|
-          r[(tile.x - tile.biome.flora_range)...(tile.x + tile.biome.flora_range)]
-        end&.flatten&.map(&:height)&.max
-        tile.add_flora if range_max_value == tile.height
-      end
-    end
+    FloraGenerator.new(@tiles).generate(config)
   end
 
   def generate_roads

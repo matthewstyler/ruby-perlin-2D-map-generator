@@ -5,6 +5,7 @@ require 'mocha/minitest'
 require 'map'
 require 'road_generator'
 require 'ostruct'
+require 'map_config'
 
 class MapTest < Minitest::Test
   def test_initialize_with_default_config
@@ -82,6 +83,15 @@ class MapTest < Minitest::Test
     assert_raises ArgumentError, 'coordinates out of bounds' do
       map[1, nil]
     end
+  end
+
+  def test_map_generation
+    config = MapConfig.new(width: 2, height: 2)
+    map = Map.new(map_config: config)
+
+    assert 2, map.tiles.length
+    assert 2, map.tiles[0].length
+    assert 2, map.tiles[1].length
   end
 
   private
