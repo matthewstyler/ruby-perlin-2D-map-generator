@@ -14,12 +14,12 @@ module Pathfinding
       g_score = { start_node => 0 }
       f_score = { start_node => manhattan_distance(start_node, end_node) }
 
-      open_set = Pathfinding::PriorityQueue.new { |a, b| a[:priority] < b[:priority] }
-      open_set.push({ node: start_node, priority: f_score[start_node] })
+      open_set = Pathfinding::PriorityQueue.new
+      open_set.push(start_node, f_score[start_node])
 
       closed_set = Set.new
       until open_set.empty?
-        current = open_set.pop[:node]
+        current = open_set.pop
 
          # Early exit if the current node is in the closed set
          next if closed_set.include?(current)
@@ -38,7 +38,7 @@ module Pathfinding
           g_score[neighbor] = tentative_g_score
           f_score[neighbor] = g_score[neighbor] + heuristic_cost_estimate(neighbor, end_node)
 
-          open_set.push({ node: neighbor, priority: f_score[neighbor] })
+          open_set.push(neighbor, f_score[neighbor])
         end
       end
 

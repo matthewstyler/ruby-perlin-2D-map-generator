@@ -11,11 +11,13 @@ module Pathfinding
   class PriorityQueue
     def initialize(&block)
       @heap = []
-      @compare = block || proc { |a, b| a < b }
+      @compare = block || proc { |a, b| @priority_hash[a] < @priority_hash[b] }
+      @priority_hash = {}
     end
 
-    def push(item)
+    def push(item, priority)
       @heap << item
+      @priority_hash[item] = priority
       heapify_up(@heap.length - 1)
     end
 
