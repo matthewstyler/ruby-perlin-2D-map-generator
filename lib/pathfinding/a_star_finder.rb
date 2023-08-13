@@ -17,15 +17,22 @@ module Pathfinding
       open_set = Pathfinding::PriorityQueue.new { |a, b| a[:priority] < b[:priority] }
       open_set.push({ node: start_node, priority: f_score[start_node] })
 
+      closed_set = Set.new
       until open_set.empty?
         current = open_set.pop[:node]
+
+         # Early exit if the current node is in the closed set
+         next if closed_set.include?(current)
+
+         # Mark the current node as visited
+         closed_set.add(current)
 
         return reconstruct_path(came_from, current) if current == end_node
 
         grid.neighbors(current).each do |neighbor|
           tentative_g_score = g_score[current] + 1
 
-          next if g_score[neighbor] && tentative_g_score >= g_score[neighbor]
+          next if closed_set.include?(neighbor) || (g_score[neighbor] && tentative_g_score >= g_score[neighbor])
 
           came_from[neighbor] = current
           g_score[neighbor] = tentative_g_score
