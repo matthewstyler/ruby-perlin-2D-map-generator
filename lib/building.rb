@@ -2,6 +2,9 @@
 
 require 'tile_item'
 
+#
+# Represents a building item on a tile
+#
 class Building < TileItem
   TOWN_RENDER_PRIORITY = DEFAULT_RENDER_PRIORITY + 1
 

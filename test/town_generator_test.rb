@@ -42,7 +42,6 @@ class TownGeneratorTest < Minitest::Test
     config = MapConfig.new(width: 25, height: 25, town_config: town_config)
     map = Map.new(map_config: config)
 
-
     TownGenerator.new(map.tiles).generate_random_towns(config.town_config)
   end
 end

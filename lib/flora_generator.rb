@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+#
+# Generates flora for the given tiles
+#
 class FloraGenerator
   attr_reader :tiles
 

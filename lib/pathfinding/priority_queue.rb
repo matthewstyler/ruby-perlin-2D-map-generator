@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module Pathfinding
+  #
+  # A Priority Queue implementation for managing elements with associated priorities.
+  # Elements are stored and retrieved based on their priority values.
+  #
+  # This Priority Queue is implemented using a binary heap, which provides efficient
+  # insertion, extraction of the minimum element, and deletion operations.
+  #
   class PriorityQueue
     def initialize(&block)
       @heap = []
@@ -55,8 +62,10 @@ module Pathfinding
       heapify_down(smallest)
     end
 
+    # rubocop:disable Naming/MethodParameterName:
     def swap(i, j)
       @heap[i], @heap[j] = @heap[j], @heap[i]
     end
+    # rubocop:enable Naming/MethodParameterName:
   end
 end

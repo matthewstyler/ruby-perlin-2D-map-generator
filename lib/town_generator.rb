@@ -4,6 +4,10 @@ require 'poisson_disk_sampling/sampler'
 require 'poisson_disk_sampling/sample_area'
 require 'road_generator'
 
+#
+# Generates building tile items using Poisson Disk Sampling for the given tiles
+# Roads are generated between the buildings and between towns using A* pathfinding
+#
 class TownGenerator
   attr_reader :sample_area, :road_generator
 

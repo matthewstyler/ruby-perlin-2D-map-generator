@@ -50,6 +50,7 @@ class MapConfig
 
   attr_reader :generate_flora, :perlin_height_config, :perlin_moist_config, :perlin_temp_config, :width, :height, :road_config, :town_config, :verbose
 
+  # rubocop:disable Metrics/ParameterLists:
   def initialize(all_perlin_configs: default_perlin_configs, width: DEFAULT_TILE_COUNT,
                  height: DEFAULT_TILE_COUNT, generate_flora: DEFAULT_GENERATE_FLORA, road_config: default_road_config, town_config: default_town_config, verbose: DEFAULT_VERBOSE)
     validate(all_perlin_configs)
@@ -65,6 +66,7 @@ class MapConfig
     town_config.verbose = verbose
     road_config.verbose = verbose
   end
+  # rubocop:enable Metrics/ParameterLists:
 
   private
 
