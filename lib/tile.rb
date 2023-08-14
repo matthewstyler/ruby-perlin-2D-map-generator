@@ -90,7 +90,7 @@ class Tile
   end
 
   def can_contain_road?
-    return true unless biome_is_water_and_is_excluded? || biome_is_high_mountain_and_is_excluded? || tile_contains_flora_and_is_excluded?
+    true unless biome_is_water_and_is_excluded? || biome_is_high_mountain_and_is_excluded? || tile_contains_flora_and_is_excluded?
   end
 
   private
