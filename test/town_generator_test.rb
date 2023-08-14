@@ -8,7 +8,7 @@ require 'poisson_disk_sampling/sampler'
 class TownGeneratorTest < Minitest::Test
   def setup
     @tiles = [[mock('tiles')]]
-    @generator = TownGenerator.new(@tiles)
+    @generator = TownGenerator.new(@tiles, seed: 12_345)
     @config = mock('config')
   end
 
@@ -20,7 +20,6 @@ class TownGeneratorTest < Minitest::Test
   def test_generate_random_towns_with_positive_towns
     @config.stubs(:towns).returns(2)
     @config.stubs(:verbose).returns(false)
-    @config.stubs(:town_seed).returns(12_345)
 
     @generator.expects(:generate_random_town).twice
     @generator.expects(:generate_roads_between_towns).once

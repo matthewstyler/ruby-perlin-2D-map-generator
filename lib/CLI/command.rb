@@ -58,7 +58,7 @@ module CLI
       long '--towns_to_make ints'
       convert :int_list
       validate ->(v) { v >= 0 }
-      desc 'Attempt to create a town at given x,y coordinate, can be supplied multiple coordinates for multiple towns'
+      desc 'Attempt to create a town at given x,y coordinate, with z points and v radius (4 integers). Can be supplied multiple towns.'
       default MapConfig::DEFAULT_TOWNS_TO_MAKE
     end
 

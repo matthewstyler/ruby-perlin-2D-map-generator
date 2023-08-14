@@ -21,11 +21,11 @@ module Pathfinding
       until open_set.empty?
         current = open_set.pop
 
-         # Early exit if the current node is in the closed set
-         next if closed_set.include?(current)
+        # Early exit if the current node is in the closed set
+        next if closed_set.include?(current)
 
-         # Mark the current node as visited
-         closed_set.add(current)
+        # Mark the current node as visited
+        closed_set.add(current)
 
         return reconstruct_path(came_from, current) if current == end_node
 

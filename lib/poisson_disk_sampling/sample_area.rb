@@ -34,6 +34,10 @@ module PoissonDiskSampling
     def point_within_bounds?(x, y)
       y >= 0 && y < height && x >= 0 && x < width
     end
+
+    def point_within_bounds_and_can_have_road?(x, y)
+      point_within_bounds?(x, y) && @grid[y][x].can_haz_road?
+    end
     # rubocop:enable Naming/MethodParameterName:
   end
 end

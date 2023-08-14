@@ -60,6 +60,8 @@ class Map
   end
 
   def generate_towns
-    TownGenerator.new(@tiles).generate_random_towns(config.town_config)
+    town_generator = TownGenerator.new(@tiles, seed: config.town_config.town_seed)
+    town_generator.generate_random_towns(config.town_config)
+    town_generator.generate_towns_from_coordinate_list(config.town_config)
   end
 end

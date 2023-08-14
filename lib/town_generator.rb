@@ -3,6 +3,7 @@
 require 'poisson_disk_sampling/sampler'
 require 'poisson_disk_sampling/sample_area'
 require 'road_generator'
+require 'map_config'
 
 #
 # Generates building tile items using Poisson Disk Sampling for the given tiles
@@ -11,9 +12,11 @@ require 'road_generator'
 class TownGenerator
   attr_reader :sample_area, :road_generator
 
-  def initialize(tiles)
+  def initialize(tiles, seed: MapConfig::DEFAULT_TOWN_SEED)
     @sample_area = PoissonDiskSampling::SampleArea.new(grid: tiles)
     @road_generator = RoadGenerator.new(tiles)
+    @seed = seed
+    @all_town_points = []
   end
 
   def generate_random_towns(config)
@@ -21,33 +24,59 @@ class TownGenerator
 
     puts "generating #{config.towns} random towns..." if config.verbose
 
-    seed = config.town_seed
+    @all_town_points.concat(iterate_through_towns(config.towns) do |n|
+      generate_random_town(n, config.verbose)
+    end)
 
-    all_town_points = (1..config.towns).map do |n|
-      town_points = generate_random_town(seed, n, config.verbose)
-      seed += 1000
-      town_points
-    end
+    generate_roads_between_towns(config.verbose)
+  end
 
-    generate_roads_between_towns(all_town_points, config.verbose)
+  def generate_towns_from_coordinate_list(config)
+    return unless (config.towns_to_make.length % 4).zero?
+
+    puts "generating #{config.towns_to_make.length / 4} coordinate towns..." if config.verbose
+
+    @all_town_points.concat(iterate_through_towns((config.towns_to_make.length / 4)) do |n|
+      town_values = config.towns_to_make[(n - 1) * 4..].take(4)
+      generate_town(n, town_values[2], town_values[3], [sample_area[town_values[0], town_values[1]]], config.verbose)
+    end)
+
+    generate_roads_between_towns(config.verbose)
   end
 
   private
 
-  def generate_random_town(seed, town_num, verbose)
+  def iterate_through_towns(num_of_towns)
+    (1..num_of_towns).map do |n|
+      town_points = yield n
+      @seed += 1000
+      town_points
+    end
+  end
+
+  def generate_random_town(town_num, verbose)
+    random_town_gen = Random.new(@seed)
+    generate_town(town_num, random_town_gen.rand(10..40), random_town_gen.rand(2..4), nil, verbose)
+  end
+
+  def generate_town(town_num, num_of_points, radius, initial_coords, verbose)
     puts "generating town #{town_num}..." if verbose
 
-    random_town_gen = Random.new(seed)
+    points = generate_points_for_town(num_of_points, radius, initial_coords)
+    generate_town_roads(points, town_num, verbose)
+    points
+  end
+
+  def generate_points_for_town(num_of_points, radius, intial_coordinates)
     points =
       PoissonDiskSampling::Sampler.new(
         sample_area: sample_area,
-        seed: seed
-      ).generate_points(random_town_gen.rand(10..40), random_town_gen.rand(2..4))
+        seed: @seed
+      ).generate_points(num_of_points, radius, intial_coordinates)
     points.each do |point|
-      seed += 1
-      point.add_town_item(seed)
+      @seed += 1
+      point.add_town_item(@seed)
     end
-    generate_town_roads(points, town_num, verbose)
     points
   end
 
@@ -74,26 +103,26 @@ class TownGenerator
   end
 
   def place_in_front_or_behind(point)
-    return [point.x, point.y + 1] if sample_area.point_within_bounds?(point.x, point.y + 1) && sample_area[point.x, point.y + 1].can_haz_road?
-    return [point.x, point.y - 1] if sample_area.point_within_bounds?(point.x, point.y - 1) && sample_area[point.x, point.y - 1].can_haz_road?
-    return [point.x - 1, point.y] if sample_area.point_within_bounds?(point.x - 1, point.y) && sample_area[point.x - 1, point.y].can_haz_road?
-    return [point.x + 1, point.y] if sample_area.point_within_bounds?(point.x + 1, point.y) && sample_area[point.x + 1, point.y].can_haz_road?
+    return [point.x, point.y - 1] if sample_area.point_within_bounds_and_can_have_road?(point.x, point.y - 1)
+    return [point.x, point.y + 1] if sample_area.point_within_bounds_and_can_have_road?(point.x, point.y + 1)
+    return [point.x - 1, point.y] if sample_area.point_within_bounds_and_can_have_road?(point.x - 1, point.y)
+    return [point.x + 1, point.y] if sample_area.point_within_bounds_and_can_have_road?(point.x + 1, point.y)
 
     nil
   end
 
-  def generate_roads_between_towns(all_town_points, verbose)
-    return if all_town_points.length < 2
+  def generate_roads_between_towns(verbose)
+    return if @all_town_points.length < 2
 
     puts 'generating roads between towns...' if verbose
 
     connected_pairs = Set.new
     town_centroids = {}
 
-    all_town_points.each_with_index do |town_one, idx_one|
+    @all_town_points.each_with_index do |town_one, idx_one|
       find_town_centroid(town_one)
 
-      all_town_points[idx_one + 1..].each do |town_two|
+      @all_town_points[idx_one + 1..].each do |town_two|
         next if connected_pairs.include?([town_one, town_two]) || connected_pairs.include?([town_two, town_one])
 
         town_one_center_x, town_one_center_y = (town_centroids[town_one] ||= find_town_centroid(town_one))

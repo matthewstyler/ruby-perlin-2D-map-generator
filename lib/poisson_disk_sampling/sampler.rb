@@ -15,16 +15,19 @@ module PoissonDiskSampling
       @seed = seed
     end
 
-    def generate_points(num_of_points, radius)
-      points = []
-      active_list = generate_and_assign_initial_point
+    def generate_points(num_of_points, radius, intial_start_point = nil)
+      raise ArgumentError, "invalid start argument #{intial_start_point}" if !intial_start_point.nil? && !intial_start_point.is_a?(Array) && intial_start_point.length != 1
 
-      retrieve_points(active_list, points, num_of_points, radius) until active_list.empty? || points.length == num_of_points
-
-      points
+      retreive_points_until_active_list_empty_or_num_points_reached(intial_start_point || generate_and_assign_initial_point, num_of_points, radius)
     end
 
     private
+
+    def retreive_points_until_active_list_empty_or_num_points_reached(active_list, num_of_points, radius)
+      points = []
+      retrieve_points(active_list, points, num_of_points, radius) until active_list.empty? || points.length == num_of_points
+      points
+    end
 
     def retrieve_points(active_list, points, num_of_points, radius)
       return if active_list.empty?
