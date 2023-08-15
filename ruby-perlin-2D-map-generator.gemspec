@@ -3,7 +3,7 @@
 Gem::Specification.new do |s|
   s.name          = 'ruby-perlin-2D-map-generator'
   s.version       = '0.0.5'
-  s.summary       = 'Procedurally generate seeded and customizable 2D maps with optional roads, rendered with ansi colours or described in a 2D array of hashes'
+  s.summary       = 'Procedurally generate seeded and customizable 2D maps with optional roads and towns, rendered with ansi colours or described in a 2D array of hashes'
   s.description   = 'A gem that procedurally generates a seeded and customizable 2D map with optional roads using perlin noise. Map can be rendered in console ' \
                     'using ansi colors or returned as 2D array of hashes describing each tile and binome. Completely ' \
                     'customizable, use the --help option for full usage details.'
@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
   s.homepage                    = 'https://github.com/matthewstyler/ruby-perlin-2D-map-generator'
   s.metadata['source_code_uri'] = 'https://github.com/matthewstyler/ruby-perlin-2D-map-generator'
   s.metadata['bug_tracker_uri'] = 'https://github.com/matthewstyler/ruby-perlin-2D-map-generator/issues'
+
+  s.post_install_message = 'Thanks for installing! Star on github if you found this useful, or raise issues and requests.'
 
   s.add_dependency 'perlin', '~> 0.2.2'
   s.add_dependency 'tty-option', '~> 0.3.0'
