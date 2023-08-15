@@ -32,18 +32,27 @@ class MapConfig
   DEFAULT_ROAD_EXCLUDE_FLORA_PATH    = true
   DEFAULT_ROADS_TO_MAKE              = [].freeze
 
+  DEFAULT_TOWN_SEED                  = 500
+  DEFAULT_NUM_OF_TOWNS               = 0
+  DEFAULT_TOWNS_TO_MAKE              = [].freeze
+
+  DEFAULT_VERBOSE                    = false
+
   PERLIN_CONFIG_OPTIONS = %i[width height noise_seed octaves x_frequency y_frequency persistance adjustment].freeze
   ALL_PERLIN_CONFIGS    = %i[perlin_height_config perlin_moist_config perlin_temp_config].freeze
-  ROAD_CONFIG_OPTIONS   = %i[road_seed roads road_exclude_water_path road_exclude_mountain_path road_exclude_flora_path roads_to_make].freeze
+  ROAD_CONFIG_OPTIONS   = %i[road_seed roads road_exclude_water_path road_exclude_mountain_path road_exclude_flora_path roads_to_make verbose].freeze
+  TOWN_CONFIG_OPTIONS   = %i[town_seed towns towns_to_make verbose].freeze
 
   PerlinConfig = Struct.new(*PERLIN_CONFIG_OPTIONS)
   AllPerlinConfigs = Struct.new(*ALL_PERLIN_CONFIGS)
   RoadConfig = Struct.new(*ROAD_CONFIG_OPTIONS)
+  TownConfig = Struct.new(*TOWN_CONFIG_OPTIONS)
 
-  attr_reader :generate_flora, :perlin_height_config, :perlin_moist_config, :perlin_temp_config, :width, :height, :road_config
+  attr_reader :generate_flora, :perlin_height_config, :perlin_moist_config, :perlin_temp_config, :width, :height, :road_config, :town_config, :verbose
 
+  # rubocop:disable Metrics/ParameterLists:
   def initialize(all_perlin_configs: default_perlin_configs, width: DEFAULT_TILE_COUNT,
-                 height: DEFAULT_TILE_COUNT, generate_flora: DEFAULT_GENERATE_FLORA, road_config: default_road_config)
+                 height: DEFAULT_TILE_COUNT, generate_flora: DEFAULT_GENERATE_FLORA, road_config: default_road_config, town_config: default_town_config, verbose: DEFAULT_VERBOSE)
     validate(all_perlin_configs)
     @generate_flora = generate_flora
     @perlin_height_config = all_perlin_configs.perlin_height_config
@@ -52,7 +61,12 @@ class MapConfig
     @width = width
     @height = height
     @road_config = road_config
+    @town_config = town_config
+    @verbose = verbose
+    town_config.verbose = verbose
+    road_config.verbose = verbose
   end
+  # rubocop:enable Metrics/ParameterLists:
 
   private
 
@@ -78,7 +92,12 @@ class MapConfig
   end
 
   def default_road_config
-    RoadConfig.new(DEFAULT_ROAD_SEED, DEFAULT_NUM_OF_ROADS, DEFAULT_ROAD_EXCLUDE_WATER_PATH, DEFAULT_ROAD_EXCLUDE_MOUNTAIN_PATH, DEFAULT_ROAD_EXCLUDE_FLORA_PATH, DEFAULT_ROADS_TO_MAKE)
+    RoadConfig.new(DEFAULT_ROAD_SEED, DEFAULT_NUM_OF_ROADS, DEFAULT_ROAD_EXCLUDE_WATER_PATH, DEFAULT_ROAD_EXCLUDE_MOUNTAIN_PATH, DEFAULT_ROAD_EXCLUDE_FLORA_PATH, DEFAULT_ROADS_TO_MAKE,
+                   DEFAULT_VERBOSE)
+  end
+
+  def default_town_config
+    TownConfig.new(DEFAULT_TOWN_SEED, DEFAULT_NUM_OF_TOWNS, DEFAULT_TOWNS_TO_MAKE, DEFAULT_VERBOSE)
   end
 
   def default_perlin_configs
