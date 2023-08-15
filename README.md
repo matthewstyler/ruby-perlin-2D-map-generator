@@ -4,16 +4,17 @@
 ![CI Status](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/actions/workflows/main.yml/badge.svg)
 ![CodeQL](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/workflows/CodeQL/badge.svg)
 <a href="https://codeclimate.com/github/matthewstyler/ruby-perlin-2D-map-generator/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b99aae29d02b7a8a4cc6/test_coverage" /></a>
+<a href="https://codeclimate.com/github/matthewstyler/ruby-perlin-2D-map-generator/maintainability"><img src="https://api.codeclimate.com/v1/badges/b99aae29d02b7a8a4cc6/maintainability" /></a>
 [![Downloads](https://img.shields.io/gem/dt/ruby-perlin-2D-map-generator.svg?style=flat)](https://rubygems.org/gems/ruby-perlin-2D-map-generator)
 
-A gem that procedurally generates seeded and customizable 2D map with optional roads using perlin noise.
+A gem that procedurally generates seeded and customizable 2D map with optional roads and towns using perlin noise.
 
 Include the gem in your project, or use the executable from the command line.
 
 Map can be rendered in console using ansi colors or returned as 2D array of hashes describing each tile and binome. Completely customizable, use the --help option for full usage details.
 
 
-![2D-maps](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/assets/4560901/43b008e9-c9c7-422a-9abe-cbe6083fd138)
+![2D-maps](https://github.com/matthewstyler/ruby-perlin-2D-map-generator/assets/4560901/6234ebc1-f3bd-48b5-9b78-4d286d2c8d6e)
 
 
 # Installation
