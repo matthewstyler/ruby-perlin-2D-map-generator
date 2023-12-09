@@ -8,6 +8,7 @@ require 'map_config'
 #
 # Generates building tile items using Poisson Disk Sampling for the given tiles
 # Roads are generated between the buildings and between towns using A* pathfinding
+# and a minimum tree spanning algorithm
 #
 class TownGenerator
   attr_reader :sample_area, :road_generator
@@ -81,25 +82,66 @@ class TownGenerator
   end
 
   def generate_town_roads(points, town_num, verbose)
-    # TODO: slow, bad (complete graph) will update to use minimum tree spanning algorithm instead
     puts "generating town #{town_num} roads..." if verbose
 
+    generate_roads_from_connected_pairs(build_minimum_spanning_tree(points, populate_distances_between_each_point(points)))
+  end
+
+  def generate_roads_from_connected_pairs(connected_pairs)
+    connected_pairs.each do |edge|
+      road_to_building_one = place_in_front_or_behind(edge.first)
+      road_to_building_two = place_in_front_or_behind(edge.last)
+
+      next if road_to_building_one.nil? || road_to_building_two.nil?
+
+      road_generator.generate_roads_from_coordinate_list(road_to_building_one.concat(road_to_building_two), false)
+    end
+  end
+
+  def build_minimum_spanning_tree(points, distances)
     connected_pairs = Set.new
+    visited = Set.new([points.first]) # Create a set to keep track of visited nodes
+    until visited.size == points.size
+      edge = find_minimum_edge(distances, visited)
+      connected_pairs.add(edge)
+      visited.add(edge.last)
+    end
+    connected_pairs
+  end
+
+  def populate_distances_between_each_point(points)
+    distances = {}
     points.each_with_index do |point_one, idx_one|
       points[idx_one + 1..].each do |point_two|
-        next if connected_pairs.include?([point_one, point_two]) || connected_pairs.include?([point_two, point_one])
-
-        road_to_building_one = place_in_front_or_behind(point_one)
-        road_to_building_two = place_in_front_or_behind(point_two)
-
-        connected_pairs.add([point_one, point_two])
-        connected_pairs.add([point_two, point_one])
-
-        next if road_to_building_one.nil? || road_to_building_two.nil?
-
-        road_generator.generate_roads_from_coordinate_list(road_to_building_one.concat(road_to_building_two), false)
+        distance = calculate_distance(point_one, point_two)
+        distances[[point_one, point_two]] = distance
+        distances[[point_two, point_one]] = distance
       end
     end
+    distances
+  end
+
+  def calculate_distance(point1, point2)
+    Math.sqrt((point1.y - point2.y)**2 + (point1.x - point2.x)**2)
+  end
+
+  def find_minimum_edge(distances, visited)
+    # method to find the minimum edge connecting visited and unvisited nodes
+    min_edge = nil
+    min_distance = Float::INFINITY
+
+    visited.each do |visited_node|
+      distances.each do |edge, distance|
+        next if visited.include?(edge.last) || edge.first != visited_node
+
+        if distance < min_distance
+          min_distance = distance
+          min_edge = edge
+        end
+      end
+    end
+
+    min_edge
   end
 
   def place_in_front_or_behind(point)
@@ -116,24 +158,8 @@ class TownGenerator
 
     puts 'generating roads between towns...' if verbose
 
-    connected_pairs = Set.new
-    town_centroids = {}
-
-    @all_town_points.each_with_index do |town_one, idx_one|
-      find_town_centroid(town_one)
-
-      @all_town_points[idx_one + 1..].each do |town_two|
-        next if connected_pairs.include?([town_one, town_two]) || connected_pairs.include?([town_two, town_one])
-
-        town_one_center_x, town_one_center_y = (town_centroids[town_one] ||= find_town_centroid(town_one))
-        town_two_center_x, town_two_center_y = (town_centroids[town_two] ||= find_town_centroid(town_two))
-
-        road_generator.generate_roads_from_coordinate_list([town_one_center_x, town_one_center_y, town_two_center_x, town_two_center_y], false)
-
-        connected_pairs.add([town_one, town_two])
-        connected_pairs.add([town_two, town_one])
-      end
-    end
+    centroids = @all_town_points.map { |town_points| find_town_centroid(town_points) }
+    generate_roads_from_connected_pairs(build_minimum_spanning_tree(centroids, populate_distances_between_each_point(centroids)))
   end
 
   def find_town_centroid(points)
@@ -149,6 +175,6 @@ class TownGenerator
     average_x = total_x / num_coordinates.to_f
     average_y = total_y / num_coordinates.to_f
 
-    [average_x, average_y]
+    OpenStruct.new(x: average_x, y: average_y)
   end
 end
