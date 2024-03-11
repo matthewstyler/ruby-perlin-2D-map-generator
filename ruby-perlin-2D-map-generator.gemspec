@@ -29,6 +29,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha', '~> 2.1.0'
   s.add_development_dependency 'pry-byebug', '~> 3.10.1'
   s.add_development_dependency 'rake', '~> 13.1.0'
-  s.add_development_dependency 'rubocop', '~> 1.58.0'
+  s.add_development_dependency 'rubocop', '~> 1.62.0'
   s.add_development_dependency 'simplecov', '~> 0.22.0'
 end
